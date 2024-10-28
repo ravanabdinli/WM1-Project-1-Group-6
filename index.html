@@ -1,31 +1,41 @@
+
 <!DOCTYPE html>
 <html>
 <head>
   <title>Resume Builder</title>
+
   <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
-  <section id="customFields">
-    <h2>Custom Fields</h2>
-    <div id="customFieldList"></div>
-    <button onclick="addCustomField()">Add Field</button>
-  </section>
+  <div class="container">
+    <h1>Resume Builder</h1>
 
-  <select id="profileSelect">
-    <option value="">-- Select Profile --</option>
-  </select>
-  <button onclick="loadProfile()">Load Profile</button>
+    <section id="customFields">
+      <h2>Custom Fields</h2>
+      <div id="customFieldList"></div>
+      <button onclick="addCustomField()">Add Field</button>
+    </section>
 
-  <select id="formFieldMapping">
-    <option value="">-- Select LinkedIn Field --</option>
-    
-  </select>
-  <input type="text" id="customFormFieldName" placeholder="Custom Form Field Name">
-  <button onclick="saveMapping()">Save Mapping</button>
+    <section id="profileSection">
+      <h2>Profile</h2>
+      <select id="profileSelect">
+        <option value="">-- Select Profile --</option>
+      </select>
+      <button onclick="loadProfile()">Load Profile</button>
+    </section>
+
+    <section id="mappingSection">
+      <h2>Form Field Mapping</h2>
+      <select id="formFieldMapping">
+        <option value="">-- Select LinkedIn Field --</option>
+      </select>
+      <input type="text" id="customFormFieldName" placeholder="Custom Form Field Name">
+      <button onclick="saveMapping()">Save Mapping</button>
+    </section>
+  </div>
 
   <script src="script.js"></script>
 </body>
 </html>
 
-
-<!-- Updating and adding JS linkage -->
+<!-- Simple HTML formatting changes -->
