@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Resume Builder</title>
+
+  <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+  <div class="container">
+    <h1>Resume Builder</h1>
+
+    <section id="customFields">
+      <h2>Custom Fields</h2>
+      <div id="customFieldList">
+        <div>
+          <label for="profileNameField">Profile Name:</label>
+          <input type="text" id="profileNameField" class="fieldName" value="">
+        </div>
+      </div>
+      <button onclick="addCustomField()">Add Field</button>
+      <button onclick="saveDataToLocalStorage()">Save Fields</button>
+    </section>
+
+    <section id="profileSection">
+      <h2>Profile</h2>
+      <select id="profileSelect">
+        <option value="">-- Select Profile --</option>
+      </select>
+      <button onclick="loadProfile()">Load Profile</button>
+    </section>
+
+    <section id="mappingSection">
+      <h2>Form Field Mapping</h2>
+      <select id="formFieldMapping">
+        <option value="">-- Select LinkedIn Field --</option>
+      </select>
+      <input type="text" id="customFormFieldName" placeholder="Custom Form Field Name">
+      <button onclick="saveMapping()">Save Mapping</button>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+<!-- Simple HTML formatting changes -->
