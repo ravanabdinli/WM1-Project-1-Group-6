@@ -1,59 +1,67 @@
 body {
-    font-family: sans-serif;
-    margin: 20px;
-  }
-  
-  section {
-    margin-bottom: 20px;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  h2 {
-    margin-top: 0;
-  }
-  
-  /* Custom Fields */
-  #customFieldList > div {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
-  
-  #customFieldList input[type="text"] {
-    flex: 1;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-  }
-  
-  /* Profile Switching */
-  #profileSelect {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-  }
-  
-  /* Form Field Mapping */
-  #formFieldMapping, #customFormFieldName {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-  }
-  
-  /* Buttons */
-  button {
-    padding: 8px 12px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
+  font-family: 'Arial', sans-serif; 
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;  
+  color: #333;  
+}
 
-  /* Basic Styling Copied from Web for Example Usage */
+.container {
+  width: 80%;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+}
+
+h1, h2 {
+  color: #000000; 
+}
+
+section {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+
+#customFieldList {
+  overflow-y: auto; 
+  max-height: 200px;  
+}
+#customFieldList input[type="text"] {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+#profileSelect {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  width: 200px;  
+
+#formFieldMapping, #customFormFieldName {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  width: 200px;  
+}
+
+button {
+  padding: 8px 12px;
+  background-color: #000000;  
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;  
+}
+
+button:hover {
+  background-color: #00ff0d;  
+
+/* Basic Styling Copied from Web in a bit changed formatting and styling */
