@@ -42,7 +42,8 @@ section {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 3px;
-  width: 200px;  
+  width: 200px;
+}
 
 #formFieldMapping, #customFormFieldName {
   padding: 8px;
@@ -62,6 +63,7 @@ button {
 }
 
 button:hover {
-  background-color: #00ff0d;  
+  background-color: darkgreen;
+}
 
 /* Basic Styling Copied from Web in a bit changed formatting and styling */
