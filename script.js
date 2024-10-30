@@ -1,4 +1,3 @@
-// Function to add a new custom field to the list
 function addCustomField() {
   const fieldList = document.getElementById('customFieldList');
   const newField = document.createElement('div');
