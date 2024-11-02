@@ -1,9 +1,10 @@
+/* Basic Styling */
 body {
-  font-family: 'Arial', sans-serif; 
+  font-family: 'Arial', sans-serif; /* Choose a modern font */
   margin: 0;
   padding: 0;
-  background-color: #f4f4f4;  
-  color: #333;  
+  background-color: #f4f4f4; /* Light background */
+  color: #333; /* Dark text color */
 }
 
 .container {
@@ -12,11 +13,11 @@ body {
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
 h1, h2 {
-  color: #000000; 
+  color: #2c3f50; /* Darker heading color */
 }
 
 section {
@@ -26,11 +27,19 @@ section {
   border-radius: 5px;
 }
 
-
+/* Custom Fields */
 #customFieldList {
-  overflow-y: auto; 
-  max-height: 200px;  
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 200px; /* Set a maximum height for the container */ 
 }
+
+#customFieldList > div {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: center; /* Align items vertically */
+}
+
 #customFieldList input[type="text"] {
   flex: 1;
   padding: 8px;
@@ -38,30 +47,54 @@ section {
   border-radius: 3px;
 }
 
+/* Profile Switching */
 #profileSelect {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 3px;
-  width: 200px;
+  width: 200px; /* Adjust width as needed */
 }
 
-#formFieldMapping, #customFormFieldName {
+/* Form Field Mapping */
+#formFieldMapping, 
+#customFormFieldName {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 3px;
-  width: 200px;  
+  width: 200px; /* Adjust width as needed */
 }
 
+/* Buttons */
 button {
   padding: 8px 12px;
-  background-color: #000000;  
+  background-color: #4CAF50; /* Green button color */
   color: white;
   border: none;
   border-radius: 3px;
   cursor: pointer;
-  transition: background-color 0.3s ease;  
+  transition: background-color 0.3s ease; /* Smooth transition */
 }
 
 button:hover {
-  background-color: darkgreen;
+  background-color: #45a049; /* Darker green on hover */
+}
+
+/* Job Application Tracking Dashboard */
+#applicationDashboard {#applicationDashboard {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+
+}
+
+#applicationTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#applicationTable th, #applicationTable td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
 }

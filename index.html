@@ -13,15 +13,25 @@
       <div id="customFieldList"></div>
       <button onclick="addCustomField()">Add Field</button>
     </section>
+<section id="profileSection">
+  <h2>Profile</h2>
+  <select id="profileSelect">
+    <option value="">-- Select Profile --</option>
+    <script>
+      // Get profiles from localStorage
+      const profiles = JSON.parse(localStorage.getItem('profiles')) || [];
 
-    <section id="profileSection">
-      <h2>Profile</h2>
-      <select id="profileSelect">
-        <option value="">-- Select Profile --</option>
-        <!-- Options will be added dynamically -->
-      </select>
-      <button onclick="loadProfile()">Load Profile</button>
-    </section>
+      // Add options for each profile
+      profiles.forEach(profile => {
+        const option = document.createElement('option');
+        option.value = profile.name; // Assuming 'name' is a property of your profile object
+        option.text = profile.name;
+        document.getElementById('profileSelect').appendChild(option);
+      });
+    </script>
+  </select>
+  <button onclick="loadProfile()">Load Profile</button>
+</section>
 
 <select id="formFieldMapping">
   <option value="">-- Select LinkedIn Field --</option>
@@ -56,4 +66,7 @@
 
   <script src="script.js"></script>
 </body>
-</html>a  1
+</html>
+
+
+<!--Adding more dynamic options via the help of ChatGPT -->
