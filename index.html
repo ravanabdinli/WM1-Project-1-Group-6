@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,74 +14,58 @@
       <div id="customFieldList"></div>
       <button onclick="addCustomField()">Add Field</button>
     </section>
-<section id="profileSection">
-  <h2>Profile</h2>
-  <select id="profileSelect">
-    <option value="">-- Select Profile --</option>
-    <script>
-      // Get profiles from localStorage
-      const profiles = JSON.parse(localStorage.getItem('profiles')) || [];
 
-      // Add options for each profile
-      profiles.forEach(profile => {
-        const option = document.createElement('option');
-        option.value = profile.name; // Assuming 'name' is a property of your profile object
-        option.text = profile.name;
-        document.getElementById('profileSelect').appendChild(option);
-      });
-    </script>
-  </select>
-  <button onclick="loadProfile()">Load Profile</button>
-</section>
+    <section id="profileSection">
+      <h2>Profile</h2>
+      <select id="profileSelect">
+        <option value="">-- Select Profile --</option>
+        <!-- Options will be added dynamically -->
+      </select>
+      <button onclick="loadProfile()">Load Profile</button>
+    </section>
 
-<select id="formFieldMapping">
-  <option value="">-- Select LinkedIn Field --</option>
-  <option value="firstName">First Name</option>
-  <option value="lastName">Last Name</option>
-  <option value="headline">Headline</option>
-  <option value="summary">Summary</option>
-  <option value="location">Location</option> 
-  <option value="industry">Industry</option>
-  <!-- Add more LinkedIn fields as needed -->
-</select>
+    <section id="mappingSection">
+      <h2>Form Field Mapping</h2>
+      <select id="formFieldMapping">
+        <option value="">-- Select LinkedIn Field --</option>
+        <!-- Options for LinkedIn fields -->
+      </select>
+      <input type="text" id="customFormFieldName" placeholder="Custom Form Field Name">
+      <button onclick="saveMapping()">Save Mapping</button>
+    </section>
 
-<section id="applicationDashboard">
-  <h2>Job Application Dashboard</h2>
-  <table id="applicationTable">
-    <thead>
-      <tr>
-        <th>Company</th>
-        <th>Job Title</th>
-        <th>Date Applied</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Google</td>
-        <td>Software Engineer</td>
-        <td>2023-10-27</td>
-        <td>Applied</td>
-      </tr>
-      <tr>
-        <td>Microsoft</td>
-        <td>Data Scientist</td>
-        <td>2023-10-25</td>
-        <td>Interviewing</td>
-      </tr>
-      <tr>
-        <td>Amazon</td>
-        <td>Product Manager</td>
-        <td>2023-10-20</td>
-        <td>Offered</td>
-      </tr>
-      <!-- Application rows will be added here --> 
-    </tbody>
-  </table>
-</section>
+    <section id="applicationDashboard">
+      <h2>Job Application Dashboard</h2>
+      <table id="applicationTable">
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th>Job Title</th>
+            <th>Date Applied</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Application rows will be added here -->
+        </tbody>
+      </table>
+    </section>
 
+    <section id="formHistory">
+      <h2>Form History</h2>
+      <ul id="historyList"></ul> 
+      <button onclick="restoreForm()">Restore Selected Form</button>
+    </section>
+
+    <section id="dataTransfer">
+      <h2>Data Transfer</h2>
+      <button onclick="exportData()">Export Data</button>
+      <input type="file" id="importFile" accept=".json">
+      <button onclick="importData()">Import Data</button>
+      <button onclick="sendDataViaEmail()">Send via Email</button>
+    </section>
   </div>
 
-  <script src="script.js"></script>
+  <script src="script.js"></script> 
 </body>
-</html>a  1
+</html>
