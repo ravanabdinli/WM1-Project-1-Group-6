@@ -1,0 +1,11 @@
+Problem Statement:
+
+LinkedIn's API has implemented stricter policies, requiring explicit user verification before allowing access to profile data. 
+This restriction directly undermines the core objective of resume builder applications, which is to provide a user-friendly and readily
+available solution for creating resumes. Instead of seamless and instant data import, users face an extra verification step, 
+creating a barrier to entry and diminishing the app's intended ease of use.
+
+While the verification process ensures user data protection, 
+it inherently limits the app's ability to provide an effortless experience. 
+Users cannot immediately leverage the convenience of auto-filling their resumes with LinkedIn profile data. 
+This ultimately affects the app's accessibility and its potential to be a readily available tool for job seekers.
