@@ -11,8 +11,21 @@
 
     <section id="customFields">
       <h2>Custom Fields</h2>
-      <div id="customFieldList"></div>
-      <button onclick="addCustomField()">Add Field</button>
+      <div id="customFieldList">
+        <div>
+          <input type="text" placeholder="Certificate Name" class="certificateName">
+          <input type="text" placeholder="Certificate Authority" class="certificateAuthority">
+          <button onclick="removeField(this)">Remove</button>
+        </div>
+        <div>
+          <input type="text" placeholder="Portfolio Link" class="portfolioLink">
+          <button onclick="removeField(this)">Remove</button>
+        </div>
+        <div>
+          <textarea placeholder="Personal Summary" class="personalSummary"></textarea>
+        </div>
+      </div>
+      <button onclick="addCustomField()">Add Field</button> 
     </section>
 
     <section id="profileSection">
@@ -57,15 +70,10 @@
       <button onclick="restoreForm()">Restore Selected Form</button>
     </section>
 
-    <section id="dataTransfer">
-      <h2>Data Transfer</h2>
-      <button onclick="exportData()">Export Data</button>
-      <input type="file" id="importFile" accept=".json">
-      <button onclick="importData()">Import Data</button>
-      <button onclick="sendDataViaEmail()">Send via Email</button>
-    </section>
-  </div>
-
-  <script src="script.js"></script> 
+  </div> 
+  <script src="script.js"></script>
 </body>
 </html>
+
+<!-- 
+Buying some time via this code problem not solved yet -->
