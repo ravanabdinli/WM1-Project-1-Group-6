@@ -47,22 +47,45 @@
       <button onclick="saveMapping()">Save Mapping</button>
     </section>
 
-    <section id="applicationDashboard">
-      <h2>Job Application Dashboard</h2>
-      <table id="applicationTable">
-        <thead>
-          <tr>
-            <th>Company</th>
-            <th>Job Title</th>
-            <th>Date Applied</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Application rows will be added here -->
-        </tbody>
-      </table>
-    </section>
+    <!-- ... your existing HTML ... -->
+
+        <section id="applicationDashboard">
+            <h2>Job Application Dashboard</h2>
+
+            <div>
+                <label for="companyInput">Company:</label>
+                <input type="text" id="companyInput"><br><br>
+
+                <label for="jobTitleInput">Job Title:</label>
+                <input type="text" id="jobTitleInput"><br><br>
+
+                <label for="dateAppliedInput">Date Applied:</label>
+                <input type="date" id="dateAppliedInput"><br><br>
+
+                <label for="statusInput">Status:</label>
+                <input type="text" id="statusInput"><br><br>
+
+                <button onclick="trackApplication()">Add Application</button>
+            </div>
+
+
+            <table id="applicationTable">
+                <thead>
+                    <tr>
+                        <th>Company</th>
+                        <th>Job Title</th>
+                        <th>Date Applied</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Application rows will be added here -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- ... rest of your existing HTML ... -->
+
 
     <section id="formHistory">
       <h2>Form History</h2>
@@ -74,6 +97,7 @@
   <script src="script.js"></script>
 </body>
 </html>
+
 
 <!-- 
 Buying some time via this code problem not solved yet -->
