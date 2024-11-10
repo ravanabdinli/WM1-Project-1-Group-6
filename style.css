@@ -1,9 +1,9 @@
 /* Basic Styling */
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f9f9f9; 
+  background-color: #f4f4f4;
   color: #333;
 }
 
@@ -13,11 +13,11 @@ body {
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 h1, h2 {
-  color: #2b3e4b; 
+  color: #2c3f50;
 }
 
 section {
@@ -43,40 +43,47 @@ section {
 #customFieldList input[type="text"] {
   flex: 1;
   padding: 8px;
-  border: 1px solid #bbb; 
-  border-radius: 4px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
 }
 
 /* Profile Switching */
-#profileSelect,
+#profileSelect {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  width: 200px;
+}
+
+/* Form Field Mapping */
 #formFieldMapping,
 #customFormFieldName {
   padding: 8px;
-  border: 1px solid #bbb;
-  border-radius: 4px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
   width: 200px;
 }
 
 /* Buttons */
 button {
-  padding: 8px 14px;
+  padding: 8px 12px;
   background-color: #4CAF50;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 3px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #3e8e41; 
+  background-color: #45a049;
 }
 
 /* Job Application Tracking Dashboard */
 #applicationDashboard {
-  background-color: #f3f3f3; 
+  background-color: #f0f0f0;
   padding: 20px;
-  border: 1px solid #bbb;
+  border: 1px solid #ccc;
   border-radius: 5px;
 }
 
@@ -87,8 +94,7 @@ button:hover {
 
 #applicationTable th,
 #applicationTable td {
-  padding: 10px; 
+  padding: 8px;
   text-align: left;
   border-bottom: 1px solid #ddd;
-  color: #555; 
 }
