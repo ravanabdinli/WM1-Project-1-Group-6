@@ -54,40 +54,32 @@
     </section>
 
     <!-- Job Application Dashboard Section -->
-    <section id="applicationDashboard">
-      <h2>Job Application Dashboard</h2>
-      <div>
-        <!-- Form to input job application details -->
-        <label for="companyInput">Company:</label>
-        <input type="text" id="companyInput"><br><br>
-
-        <label for="jobTitleInput">Job Title:</label>
-        <input type="text" id="jobTitleInput"><br><br>
-
-        <label for="dateAppliedInput">Date Applied:</label>
-        <input type="date" id="dateAppliedInput"><br><br>
-
-        <label for="statusInput">Status:</label>
-        <input type="text" id="statusInput"><br><br>
-
-        <button onclick="trackApplication()">Add Application</button>
-      </div>
-
-      <!-- Table to display job application details -->
-      <table id="applicationTable">
+<section id="applicationDashboard">
+    <h2>Job Applications</h2>
+    <table id="applicationTable">
         <thead>
-          <tr>
-            <th>Company</th>
-            <th>Job Title</th>
-            <th>Date Applied</th>
-            <th>Status</th>
-          </tr>
+            <tr>
+                <th>Company</th>
+                <th>Job Title</th>
+                <th>Date Applied</th>
+                <th>Status</th>
+                <th>Actions</th> <!-- Add an Actions column -->
+            </tr>
         </thead>
-        <tbody>
-          <!-- Application entries will be added dynamically here -->
-        </tbody>
-      </table>
-    </section>
+        <tbody id="applicationTableBody">
+            </tbody>
+    </table>
+</section>
+
+<section>
+<label for="companyInput">Company:</label>
+<input type="text" id="companyInput" placeholder="Enter company name"><br><br>
+
+<label for="jobTitleInput">Job Title:</label>
+<input type="text" id="jobTitleInput" placeholder="Enter job title"><br><br>
+<button onclick="trackApplication()">Track Application</button>
+</section>
+
 
     <!-- Form History Section -->
     <section id="formHistory">
