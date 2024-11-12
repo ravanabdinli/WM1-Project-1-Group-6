@@ -1,142 +1,119 @@
-// Custom Fields
-function addCustomField() {
-  const fieldList = document.getElementById('customFieldList');
-  const newField = document.createElement('div');
-  newField.innerHTML = `
-    <input type="text" placeholder="Field Name" class="fieldName">
-    <input type="text" placeholder="Field Value" class="fieldValue">
-    <button onclick="removeField(this)">Remove</button>
-  `;
-  fieldList.appendChild(newField);
+// Function to save custom fields for a specific profile
+function saveCustomField() {
+  const customFieldName = document.getElementById('customFieldNameInput').value;
+  const customFieldValue = document.getElementById('customFieldValueInput').value;
+  const profileName = document.getElementById('profileSelect').value; // Assuming you have a profile selector
+
+  let profiles = JSON.parse(localStorage.getItem('profiles')) || {};
+  if (!profiles[profileName]) {
+      profiles[profileName] = {};
+  }
+  profiles[profileName].customFields = profiles[profileName].customFields || {};
+  profiles[profileName].customFields[customFieldName] = customFieldValue;
+  localStorage.setItem('profiles', JSON.stringify(profiles));
+
+  // Optionally, update the UI to reflect the new custom field
+  updateCustomFieldList(profileName);
 }
 
-function removeField(button) {
-  button.closest('div').remove();
-}
+// Function to update the UI with the custom fields for a specific profile
+function updateCustomFieldList(profileName) {
+  const customFieldList = document.getElementById('customFieldList');
+  customFieldList.innerHTML = ''; // Clear the list
 
-function saveDataToLocalStorage() {
-  const customFields = Array.from(document.querySelectorAll('#customFieldList .fieldName, #customFieldList .fieldValue'))
-    .reduce((fields, el, index, arr) => {
-      if (index % 2 === 0 && el.value && arr[index + 1].value) {
-        fields.push({ name: el.value, value: arr[index + 1].value });
-      }
-      return fields;
-    }, []);
-  
-  localStorage.setItem('resumeData', JSON.stringify(customFields));
-}
+  const profiles = JSON.parse(localStorage.getItem('profiles')) || {};
+  const customFields = profiles[profileName]?.customFields || {};
 
-// Profile Switching
-function loadProfile() {
-  const selectedProfile = document.getElementById('profileSelect').value;
-  const profiles = JSON.parse(localStorage.getItem('profiles')) || [];
-  const selectedProfileData = profiles.find(profile => profile.name === selectedProfile);
-  
-  if (selectedProfileData) {
-    // Populate form fields with selectedProfileData
-    // Example: document.getElementById('profileName').value = selectedProfileData.name;
+  for (const fieldName in customFields) {
+    const listItem = document.createElement('li');
+    listItem.textContent = `${fieldName}: ${customFields[fieldName]}`;
+    customFieldList.appendChild(listItem);
   }
 }
 
-// Form Field Mapping
-function saveMapping() {
-  const linkedinField = document.getElementById('formFieldMapping').value;
-  const customField = document.getElementById('customFormFieldName').value;
+// Function to load a profile and populate the UI
+function loadProfile(profileName) {
+  // ... (Existing code)
 
-  const fieldMappings = JSON.parse(localStorage.getItem('fieldMappings')) || {};
-  fieldMappings[customField] = linkedinField;
-  localStorage.setItem('fieldMappings', JSON.stringify(fieldMappings));
+  // Display custom fields
+  updateCustomFieldList(profileName);
+
+  // ... (rest of loadProfile function)
 }
 
-// Job Application Tracking Dashboard
-function trackApplication(company, jobTitle, dateApplied, status) {
-  const applications = JSON.parse(localStorage.getItem('applications')) || [];
+// Function to track job applications
+function trackApplication() {
+  const company = document.getElementById('companyInput').value;
+  const jobTitle = document.getElementById('jobTitleInput').value;
+  const dateApplied = new Date().toISOString().split('T')[0]; // Get current date
+  const status = 'Pending'; // Initial status
+
+  let applications = JSON.parse(localStorage.getItem('applications')) || [];
   applications.push({ company, jobTitle, dateApplied, status });
   localStorage.setItem('applications', JSON.stringify(applications));
-  updateApplicationDashboard();
+
+  updateApplicationTable();
 }
 
-function updateApplicationDashboard() {
-  const tableBody = document.querySelector('#applicationTable tbody');
-  tableBody.innerHTML = ''; // Clear existing rows
-
+// Function to update the job application tracking table
+function updateApplicationTable() {
   const applications = JSON.parse(localStorage.getItem('applications')) || [];
-  applications.forEach(({ company, jobTitle, dateApplied, status }) => {
+  const tableBody = document.getElementById('applicationTableBody');
+  tableBody.innerHTML = ''; // Clear the table
+
+  applications.forEach(app => {
     const row = tableBody.insertRow();
-    row.insertCell().textContent = company;
-    row.insertCell().textContent = jobTitle;
-    row.insertCell().textContent = dateApplied;
-    row.insertCell().textContent = status;
+    row.insertCell().textContent = app.company;
+    row.insertCell().textContent = app.jobTitle;
+    row.insertCell().textContent = app.dateApplied;
+    row.insertCell().textContent = app.status;
   });
 }
 
-// History Restoring
-function saveFormToHistory() {
-  const formData = {
-    // Collect data from form fields
-  };
-  const timestamp = new Date().toISOString();
-  const formHistory = JSON.parse(localStorage.getItem('formHistory')) || [];
-  formHistory.push({ timestamp, data: formData });
-  localStorage.setItem('formHistory', JSON.stringify(formHistory));
-  updateHistoryList();
-}
-
-function updateHistoryList() {
-  const historyList = document.getElementById('historyList');
-  historyList.innerHTML = ''; // Clear existing list
-
-  const formHistory = JSON.parse(localStorage.getItem('formHistory')) || [];
-  formHistory.forEach(entry => {
-    const listItem = document.createElement('li');
-    listItem.textContent = entry.timestamp;
-    listItem.onclick = () => restoreForm(entry);
-    historyList.appendChild(listItem);
-  });
-}
-
-function restoreForm(selectedEntry) {
-  if (selectedEntry) {
-    const formData = selectedEntry.data;
-    // Populate form fields with data from formData
-    // Example: document.getElementById('fieldName').value = formData.fieldName;
-  } else {
-    console.log("No entry selected from history.");
-  }
-}
-
-// Data Transfer
+// Function to export data
 function exportData() {
-  const resumeData = {
-    // Collect all resume data
+  const dataToExport = {
+    profiles: JSON.parse(localStorage.getItem('profiles')),
+    applications: JSON.parse(localStorage.getItem('applications')),
+    // ... other data
   };
-  const jsonData = JSON.stringify(resumeData);
+
+  const jsonData = JSON.stringify(dataToExport);
   const blob = new Blob([jsonData], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
-  
+
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'resume_data.json';
+  a.download = 'my_extension_data.json';
+  document.body.appendChild(a);
   a.click();
-  
+  document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
 
-document.getElementById('importFile').onchange = function() {
-  const file = this.files[0];
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const importedData = JSON.parse(e.target.result);
-    // Populate form fields with importedData
-  };
-  reader.readAsText(file);
-};
-
-function sendDataViaEmail() {
-  const resumeData = {
-    // Collect all resume data
-  };
-  const jsonData = JSON.stringify(resumeData);
-  const mailtoLink = `mailto:?subject=My Resume Data&body=${encodeURIComponent(jsonData)}`;
-  window.location.href = mailtoLink;
+// Get currently selected profile name (Assuming you have a profileSelect dropdown)
+function getCurrentlySelectedProfile() {
+  return document.getElementById('profileSelect').value;
 }
+
+// Add event listeners when the DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  // Custom field event listeners
+  document.getElementById('saveCustomFieldButton').addEventListener('click', saveCustomField);
+  document.getElementById('customFieldNameInput').addEventListener('change', saveCustomField);
+  document.getElementById('customFieldValueInput').addEventListener('change', saveCustomField);
+
+  // Application tracking event listener
+  document.getElementById('trackApplicationButton').addEventListener('click', trackApplication);
+
+  // Data export event listener
+  document.getElementById('exportDataButton').addEventListener('click', exportData);
+
+  // Load initial data
+  const profileName = getCurrentlySelectedProfile();
+  updateCustomFieldList(profileName);
+  updateApplicationTable();
+});
+
+
+// Partially Updating JS part
