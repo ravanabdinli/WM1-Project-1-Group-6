@@ -1,97 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Resume Builder</title>
-  <link rel="stylesheet" href="style.css"> 
+    <title>Resume Builder</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <!-- Main Title -->
-    <h1>Resume Builder</h1>
+    <div class="container">
+        <h1>Resume Builder</h1>
 
-    <!-- Section for adding custom fields dynamically -->
-    <section id="customFields">
-      <h2>Custom Fields</h2>
-      <div id="customFieldList">
-        <!-- Sample Custom Field for Certification -->
-        <div>
-          <input type="text" placeholder="Certificate Name" class="certificateName">
-          <input type="text" placeholder="Certificate Authority" class="certificateAuthority">
-          <button onclick="removeField(this)">Remove</button>
+        <!-- Profile Switching Section -->
+        <section id="profileSection">
+            <h3>Profile</h3>
+            <select id="profileSelect">
+                <option value="default">Default</option>
+                </select>
+            <button id="loadProfileButton" onclick="loadProfile(document.getElementById('profileSelect').value)">Load Profile</button>
+            <!-- Add buttons for creating, deleting profiles etc. -->
+        </section>
+
+        <!-- Customizable Data Fields Section -->
+        <section id="customFieldsSection">
+            <h3>Custom Fields</h3>
+            <label for="customFieldNameInput">Field Name:</label>
+            <input type="text" id="customFieldNameInput" placeholder="Enter field name"><br><br>
+            <label for="customFieldValueInput">Field Value:</label>
+            <input type="text" id="customFieldValueInput" placeholder="Enter field value"><br><br>
+            <button id="saveCustomFieldButton">Save Custom Field</button>
+            <div id="customFieldList">
+                <!-- Custom fields will be displayed here -->
+            </div>
+        </section>
+
+        <!-- Job Application Tracking Dashboard Section -->
+        <section id="applicationDashboard">
+            <h2>Job Applications</h2>
+            <table id="applicationTable">
+                <thead>
+                    <tr>
+                        <th>Company</th>
+                        <th>Job Title</th>
+                        <th>Date Applied</th>
+                        <th>Status</th>
+                        <th>Actions</th> 
+                    </tr>
+                </thead>
+                <tbody id="applicationTableBody">
+                    </tbody>
+            </table>
+        </section>
+
+        <section>
+            <label for="companyInput">Company:</label>
+            <input type="text" id="companyInput" placeholder="Enter company name"><br><br>
+            <label for="jobTitleInput">Job Title:</label>
+            <input type="text" id="jobTitleInput" placeholder="Enter job title"><br><br>
+            <button id="trackApplicationButton">Track Application</button>
+        </section>
+
+        <!-- Data Export Section -->
+        <section id="dataExportSection">
+            <h3>Data Export</h3>
+            <button id="exportDataButton">Export Data</button>
+        </section>
+
         </div>
-        <!-- Sample Custom Field for Portfolio Link -->
-        <div>
-          <input type="text" placeholder="Portfolio Link" class="portfolioLink">
-          <button onclick="removeField(this)">Remove</button>
-        </div>
-        <!-- Sample Custom Field for Personal Summary -->
-        <div>
-          <textarea placeholder="Personal Summary" class="personalSummary"></textarea>
-        </div>
-      </div>
-      <button onclick="addCustomField()">Add Field</button> 
-    </section>
-
-    <!-- Section for selecting and loading a profile -->
-    <section id="profileSection">
-      <h2>Profile</h2>
-      <select id="profileSelect">
-        <option value="">-- Select Profile --</option>
-        <!-- Options populated dynamically -->
-      </select>
-      <button onclick="loadProfile()">Load Profile</button>
-    </section>
-
-    <!-- Section for mapping LinkedIn fields to custom form fields -->
-    <section id="mappingSection">
-      <h2>Form Field Mapping</h2>
-      <select id="formFieldMapping">
-        <option value="">-- Select LinkedIn Field --</option>
-        <!-- LinkedIn fields populated dynamically -->
-      </select>
-      <input type="text" id="customFormFieldName" placeholder="Custom Form Field Name">
-      <button onclick="saveMapping()">Save Mapping</button>
-    </section>
-
-    <!-- Job Application Dashboard Section -->
-<section id="applicationDashboard">
-    <h2>Job Applications</h2>
-    <table id="applicationTable">
-        <thead>
-            <tr>
-                <th>Company</th>
-                <th>Job Title</th>
-                <th>Date Applied</th>
-                <th>Status</th>
-                <th>Actions</th> <!-- Add an Actions column -->
-            </tr>
-        </thead>
-        <tbody id="applicationTableBody">
-            </tbody>
-    </table>
-</section>
-
-<section>
-<label for="companyInput">Company:</label>
-<input type="text" id="companyInput" placeholder="Enter company name"><br><br>
-
-<label for="jobTitleInput">Job Title:</label>
-<input type="text" id="jobTitleInput" placeholder="Enter job title"><br><br>
-<button onclick="trackApplication()">Track Application</button>
-</section>
-
-
-    <!-- Form History Section -->
-    <section id="formHistory">
-      <h2>Form History</h2>
-      <ul id="historyList">
-        <!-- List items populated dynamically from history -->
-      </ul> 
-      <button onclick="restoreForm()">Restore Selected Form</button>
-    </section>
-  </div> 
-  
-  <!-- Link to external JavaScript file -->
-  <script src="script.js"></script>
+    <script src="script.js"></script> 
 </body>
 </html>
