@@ -1,0 +1,38 @@
+function addSkillFields() {
+    const skillItem = document.createElement('div');
+    skillItem.classList.add('skill-item', 'mb-3');
+    skillItem.innerHTML = `
+        <div class="mb-2">
+            <label class="form-label">Skill</label>
+            <input type="text" class="form-control skillField" placeholder="Skill Name">
+        </div>
+        <button class="btn btn-success saveSkillBtn">Save Skill</button>
+    `;
+    skillFields.appendChild(skillItem);
+
+    skillItem.querySelector('.saveSkillBtn').addEventListener('click', () => {
+        saveSkill(skillItem);
+    });
+}
+
+function saveSkill(skillItem) {
+    const skillName = skillItem.querySelector('.skillField').value;
+
+    if (skillName) {
+        skillsData.push(skillName);
+        skillItem.remove();
+        displaySavedSkills();
+    } else {
+        alert('Please enter a skill name.');
+    }
+}
+
+function displaySavedSkills() {
+    savedSkills.innerHTML = '';
+    skillsData.forEach((skill, index) => {
+        const skillDiv = document.createElement('div');
+        skillDiv.classList.add('border', 'p-2', 'mb-2');
+        skillDiv.innerHTML = <strong>Skill ${index + 1}:</strong> ${skill};
+        savedSkills.appendChild(skillDiv);
+    });
+}
