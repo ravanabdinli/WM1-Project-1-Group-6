@@ -1,8 +1,62 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resume Builder</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        section {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table th, table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        button {
+            padding: 10px 15px;
+            margin-top: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        input, select {
+            padding: 10px;
+            width: calc(100% - 22px);
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -10,23 +64,36 @@
 
         <!-- Profile Switching Section -->
         <section id="profileSection">
-            <h3>Profile</h3>
+            <h3>Profile Management</h3>
+            <label for="profileSelect">Choose a Profile:</label>
             <select id="profileSelect">
                 <option value="default">Default</option>
-                </select>
-            <button id="loadProfileButton" onclick="loadProfile(document.getElementById('profileSelect').value)">Load Profile</button>
-            <!-- Add buttons for creating, deleting profiles etc. -->
+            </select>
+            <button id="loadProfileButton" onclick="loadProfile()">Load Profile</button>
+            <button id="createProfileButton" onclick="createProfile()">Create Profile</button>
+            <button id="deleteProfileButton" onclick="deleteProfile()">Delete Profile</button>
+        </section>
+
+        <!-- Resume Preview Section -->
+        <section id="resumePreviewSection">
+            <h3>Resume Preview</h3>
+            <div id="resumePreview">
+                <!-- Generated resume preview will be displayed here -->
+                <p><i>No resume generated yet. Fill in the fields below to create your resume.</i></p>
+            </div>
+            <button id="generateResumeButton" onclick="generateResume()">Generate Resume</button>
         </section>
 
         <!-- Customizable Data Fields Section -->
         <section id="customFieldsSection">
             <h3>Custom Fields</h3>
             <label for="customFieldNameInput">Field Name:</label>
-            <input type="text" id="customFieldNameInput" placeholder="Enter field name"><br><br>
+            <input type="text" id="customFieldNameInput" placeholder="Enter field name">
             <label for="customFieldValueInput">Field Value:</label>
-            <input type="text" id="customFieldValueInput" placeholder="Enter field value"><br><br>
-            <button id="saveCustomFieldButton">Save Custom Field</button>
+            <input type="text" id="customFieldValueInput" placeholder="Enter field value">
+            <button id="saveCustomFieldButton" onclick="saveCustomField()">Save Custom Field</button>
             <div id="customFieldList">
+                <h4>Saved Fields:</h4>
                 <!-- Custom fields will be displayed here -->
             </div>
         </section>
@@ -41,12 +108,66 @@
                         <th>Job Title</th>
                         <th>Date Applied</th>
                         <th>Status</th>
-                        <th>Actions</th> 
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody id="applicationTableBody">
-                    </tbody>
+                    <!-- Job applications will be listed here -->
+                </tbody>
             </table>
+            <button onclick="addApplicationRow()">Add Job Application</button>
         </section>
+    </div>
 
-</html>
+    <script>
+        // Placeholder for profile functionality
+        function loadProfile() {
+            alert("Load Profile functionality coming soon!");
+        }
+        function createProfile() {
+            alert("Create Profile functionality coming soon!");
+        }
+        function deleteProfile() {
+            alert("Delete Profile functionality coming soon!");
+        }
+
+        // Placeholder for resume generation
+        function generateResume() {
+            document.getElementById("resumePreview").innerHTML = "<p><b>Your resume is ready!</b> (Functionality to customize and save it coming soon!)</p>";
+        }
+
+        // Placeholder for saving custom fields
+        function saveCustomField() {
+            const fieldName = document.getElementById("customFieldNameInput").value;
+            const fieldValue = document.getElementById("customFieldValueInput").value;
+            const fieldList = document.getElementById("customFieldList");
+
+            if (fieldName && fieldValue) {
+                const newField = document.createElement("p");
+                newField.textContent = `${fieldName}: ${fieldValue}`;
+                fieldList.appendChild(newField);
+
+                document.getElementById("customFieldNameInput").value = '';
+                document.getElementById("customFieldValueInput").value = '';
+            } else {
+                alert("Please fill in both field name and value!");
+            }
+        }
+
+        // Placeholder for adding a job application row
+        function addApplicationRow() {
+            const tableBody = document.getElementById("applicationTableBody");
+            const newRow = document.createElement("tr");
+
+            newRow.innerHTML = `
+                <td><input type="text" placeholder="Company"></td>
+                <td><input type="text" placeholder="Job Title"></td>
+                <td><input type="date"></td>
+                <td>
+                    <select>
+                        <option value="applied">Applied</option>
+                        <option value="interview">Interview</option>
+                        <option value="offer">Offer</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                
