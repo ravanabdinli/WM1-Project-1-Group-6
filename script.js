@@ -1,84 +1,95 @@
-// Function to save custom fields for a specific profile
-function saveCustomField() {
-  const customFieldName = document.getElementById('customFieldNameInput').value;
-  const customFieldValue = document.getElementById('customFieldValueInput').value;
-  const profileName = document.getElementById('profileSelect').value; // Assuming you have a profile selector
-
-  let profiles = JSON.parse(localStorage.getItem('profiles')) || {};
-  if (!profiles[profileName]) {
-      profiles[profileName] = {};
+// Utility function to safely parse JSON
+function safeParseJSON(data) {
+  try {
+    return JSON.parse(data) ?? {};
+  } catch {
+    return {};
   }
-  profiles[profileName].customFields = profiles[profileName].customFields || {};
-  profiles[profileName].customFields[customFieldName] = customFieldValue;
-  localStorage.setItem('profiles', JSON.stringify(profiles));
+}
 
-  // Optionally, update the UI to reflect the new custom field
+// Save custom fields for a specific profile
+function saveCustomField() {
+  const customFieldName = document.getElementById('customFieldNameInput').value.trim();
+  const customFieldValue = document.getElementById('customFieldValueInput').value.trim();
+  const profileName = getCurrentlySelectedProfile();
+
+  if (!customFieldName || !customFieldValue || !profileName) {
+    alert('Please provide all required fields and select a profile.');
+    return;
+  }
+
+  const profiles = safeParseJSON(localStorage.getItem('profiles'));
+  profiles[profileName] = profiles[profileName] ?? { customFields: {} };
+  profiles[profileName].customFields[customFieldName] = customFieldValue;
+
+  localStorage.setItem('profiles', JSON.stringify(profiles));
   updateCustomFieldList(profileName);
 }
 
-// Function to update the UI with the custom fields for a specific profile
+// Update UI with custom fields for a specific profile
 function updateCustomFieldList(profileName) {
   const customFieldList = document.getElementById('customFieldList');
   customFieldList.innerHTML = ''; // Clear the list
 
-  const profiles = JSON.parse(localStorage.getItem('profiles')) || {};
-  const customFields = profiles[profileName]?.customFields || {};
+  const profiles = safeParseJSON(localStorage.getItem('profiles'));
+  const customFields = profiles[profileName]?.customFields ?? {};
 
-  for (const fieldName in customFields) {
+  Object.entries(customFields).forEach(([fieldName, fieldValue]) => {
     const listItem = document.createElement('li');
-    listItem.textContent = `${fieldName}: ${customFields[fieldName]}`;
+    listItem.textContent = `${fieldName}: ${fieldValue}`;
     customFieldList.appendChild(listItem);
-  }
-}
-
-// Function to load a profile and populate the UI
-function loadProfile(profileName) {
-  // ... (Existing code)
-
-  // Display custom fields
-  updateCustomFieldList(profileName);
-
-  // ... (rest of loadProfile function)
-}
-
-// Function to track job applications
-function trackApplication() {
-  const company = document.getElementById('companyInput').value;
-  const jobTitle = document.getElementById('jobTitleInput').value;
-  const dateApplied = new Date().toISOString().split('T')[0]; // Get current date
-  const status = 'Pending'; // Initial status
-
-  let applications = JSON.parse(localStorage.getItem('applications')) || [];
-  applications.push({ company, jobTitle, dateApplied, status });
-  localStorage.setItem('applications', JSON.stringify(applications));
-
-  updateApplicationTable();
-}
-
-// Function to update the job application tracking table
-function updateApplicationTable() {
-  const applications = JSON.parse(localStorage.getItem('applications')) || [];
-  const tableBody = document.getElementById('applicationTableBody');
-  tableBody.innerHTML = ''; // Clear the table
-
-  applications.forEach(app => {
-    const row = tableBody.insertRow();
-    row.insertCell().textContent = app.company;
-    row.insertCell().textContent = app.jobTitle;
-    row.insertCell().textContent = app.dateApplied;
-    row.insertCell().textContent = app.status;
   });
 }
 
-// Function to export data
+// Load profile and populate the UI
+function loadProfile(profileName) {
+  if (!profileName) return;
+
+  updateCustomFieldList(profileName);
+  // Other profile-related UI updates can be added here
+}
+
+// Track job applications
+function trackApplication() {
+  const company = document.getElementById('companyInput').value.trim();
+  const jobTitle = document.getElementById('jobTitleInput').value.trim();
+
+  if (!company || !jobTitle) {
+    alert('Please provide both company and job title.');
+    return;
+  }
+
+  const applications = safeParseJSON(localStorage.getItem('applications'));
+  const dateApplied = new Date().toISOString().split('T')[0]; // Current date
+  applications.push({ company, jobTitle, dateApplied, status: 'Pending' });
+
+  localStorage.setItem('applications', JSON.stringify(applications));
+  updateApplicationTable();
+}
+
+// Update the job application tracking table
+function updateApplicationTable() {
+  const applications = safeParseJSON(localStorage.getItem('applications'));
+  const tableBody = document.getElementById('applicationTableBody');
+  tableBody.innerHTML = ''; // Clear the table
+
+  applications.forEach(({ company, jobTitle, dateApplied, status }) => {
+    const row = tableBody.insertRow();
+    row.insertCell().textContent = company;
+    row.insertCell().textContent = jobTitle;
+    row.insertCell().textContent = dateApplied;
+    row.insertCell().textContent = status;
+  });
+}
+
+// Export data as JSON
 function exportData() {
   const dataToExport = {
-    profiles: JSON.parse(localStorage.getItem('profiles')),
-    applications: JSON.parse(localStorage.getItem('applications')),
-    // ... other data
+    profiles: safeParseJSON(localStorage.getItem('profiles')),
+    applications: safeParseJSON(localStorage.getItem('applications')),
   };
 
-  const jsonData = JSON.stringify(dataToExport);
+  const jsonData = JSON.stringify(dataToExport, null, 2);
   const blob = new Blob([jsonData], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
 
@@ -91,29 +102,19 @@ function exportData() {
   URL.revokeObjectURL(url);
 }
 
-// Get currently selected profile name (Assuming you have a profileSelect dropdown)
+// Get the currently selected profile name
 function getCurrentlySelectedProfile() {
-  return document.getElementById('profileSelect').value;
+  return document.getElementById('profileSelect')?.value ?? '';
 }
 
-// Add event listeners when the DOM is loaded
+// Attach event listeners once DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-  // Custom field event listeners
   document.getElementById('saveCustomFieldButton').addEventListener('click', saveCustomField);
-  document.getElementById('customFieldNameInput').addEventListener('change', saveCustomField);
-  document.getElementById('customFieldValueInput').addEventListener('change', saveCustomField);
-
-  // Application tracking event listener
   document.getElementById('trackApplicationButton').addEventListener('click', trackApplication);
-
-  // Data export event listener
   document.getElementById('exportDataButton').addEventListener('click', exportData);
 
-  // Load initial data
+  // Initial UI load
   const profileName = getCurrentlySelectedProfile();
-  updateCustomFieldList(profileName);
+  loadProfile(profileName);
   updateApplicationTable();
 });
-
-
-// Partially Updating JS part
