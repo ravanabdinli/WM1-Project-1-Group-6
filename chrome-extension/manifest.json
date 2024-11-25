@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Smart Form Filler",
+  "description": "A Chrome extension to autofill forms with saved data.",
+  "version": "1.0",
+  "permissions": ["storage", "activeTab", "scripting"],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "/icons/office-bag.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["js/content.js"]
+    }
+  ]
+}
