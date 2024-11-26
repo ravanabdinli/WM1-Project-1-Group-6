@@ -1,23 +1,22 @@
 body {
   font-family: Arial, sans-serif;
   margin: 10px;
-  width: 300px;
+  width: 350px;
 }
 
 #nav-menu {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   margin-bottom: 15px;
 }
 
 button {
-  background-color: #0d6efd;
+  background-color: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
   padding: 8px 10px;
   cursor: pointer;
-  font-size: 12px;
 }
 
 button:hover {
@@ -33,14 +32,17 @@ h2 {
   margin-bottom: 10px;
 }
 
-label {
-  display: block;
-  margin-top: 10px;
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
 }
 
-input, textarea {
-  width: 100%;
-  margin-top: 5px;
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
   padding: 8px;
-  font-size: 14px;
+  text-align: left;
 }

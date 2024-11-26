@@ -1,84 +1,108 @@
 const sections = {
+  dashboard: document.getElementById("dashboard-section"),
   manualEntry: document.getElementById("manual-entry-section"),
   viewData: document.getElementById("view-data-section"),
-  coverLetter: document.getElementById("cover-letter-section"),
+  profiles: document.getElementById("profiles-section"),
+  dataTransfer: document.getElementById("data-transfer-section"),
 };
 
 // Navigation Buttons
+document.getElementById("nav-dashboard").addEventListener("click", () => showSection("dashboard"));
 document.getElementById("nav-view-data").addEventListener("click", () => showSection("viewData"));
 document.getElementById("nav-manual-entry").addEventListener("click", () => showSection("manualEntry"));
-document.getElementById("nav-cover-letter").addEventListener("click", () => showSection("coverLetter"));
+document.getElementById("nav-profiles").addEventListener("click", () => showSection("profiles"));
+document.getElementById("nav-data-transfer").addEventListener("click", () => showSection("dataTransfer"));
 
-// Show a specific section and hide others
+// Show specific section
 function showSection(section) {
   Object.values(sections).forEach((s) => (s.style.display = "none"));
   sections[section].style.display = "block";
-
-  if (section === "viewData") {
-    loadSavedEntries();
-  }
 }
 
-// Save data to chrome.storage.local
-document.getElementById("data-form").addEventListener("submit", (e) => {
+// Dashboard: Add and Display Applications
+const applicationForm = document.getElementById("application-form");
+const applicationTableBody = document.getElementById("application-table").querySelector("tbody");
+
+applicationForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  const entryName = document.getElementById("entryName").value;
-  const data = {
-    firstName: document.getElementById("firstName").value,
-    lastName: document.getElementById("lastName").value,
-    dob: document.getElementById("dob").value,
-    country: document.getElementById("country").value,
-    city: document.getElementById("city").value,
-    about: document.getElementById("about").value,
-    contact: document.getElementById("contact").value,
+  const application = {
+    company: document.getElementById("company").value,
+    jobTitle: document.getElementById("jobTitle").value,
+    dateApplied: document.getElementById("dateApplied").value,
+    status: document.getElementById("status").value,
   };
 
-  chrome.storage.local.get("userEntries", (result) => {
-    const userEntries = result.userEntries || {};
-    userEntries[entryName] = data;
-
-    chrome.storage.local.set({ userEntries }, () => {
-      alert("Data saved successfully!");
-      document.getElementById("data-form").reset();
+  chrome.storage.local.get("applications", (result) => {
+    const applications = result.applications || [];
+    applications.push(application);
+    chrome.storage.local.set({ applications }, () => {
+      loadApplications();
+      applicationForm.reset();
     });
   });
 });
 
-// Load saved entries and display them in a list
-function loadSavedEntries() {
-  chrome.storage.local.get("userEntries", (result) => {
-    const userEntries = result.userEntries || {};
-    const savedEntriesList = document.getElementById("saved-entries");
-    savedEntriesList.innerHTML = "";
-
-    Object.keys(userEntries).forEach((entryName) => {
-      const li = document.createElement("li");
-      li.textContent = entryName;
-      li.addEventListener("click", () => displayEntryData(entryName, userEntries[entryName]));
-      savedEntriesList.appendChild(li);
+function loadApplications() {
+  chrome.storage.local.get("applications", (result) => {
+    const applications = result.applications || [];
+    applicationTableBody.innerHTML = "";
+    applications.forEach((app) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${app.company}</td>
+        <td>${app.jobTitle}</td>
+        <td>${app.dateApplied}</td>
+        <td>${app.status}</td>
+      `;
+      applicationTableBody.appendChild(row);
     });
-
-    if (Object.keys(userEntries).length === 0) {
-      savedEntriesList.innerHTML = "<p>No saved entries found.</p>";
-    }
   });
 }
 
-// Display the details of a specific entry
-function displayEntryData(entryName, entryData) {
-  const savedEntriesList = document.getElementById("saved-entries");
-  savedEntriesList.innerHTML = `
-    <h3>${entryName}</h3>
-    <p><strong>First Name:</strong> ${entryData.firstName}</p>
-    <p><strong>Last Name:</strong> ${entryData.lastName}</p>
-    <p><strong>Date of Birth:</strong> ${entryData.dob}</p>
-    <p><strong>Country:</strong> ${entryData.country}</p>
-    <p><strong>City:</strong> ${entryData.city}</p>
-    <p><strong>About:</strong> ${entryData.about}</p>
-    <p><strong>Contact:</strong> ${entryData.contact}</p>
-    <button id="back-to-list">Back to List</button>
-  `;
+// Profiles: Add, Edit, and Delete Profiles
+document.getElementById("new-profile").addEventListener("click", () => {
+  document.getElementById("profile-editor").style.display = "block";
+});
 
-  document.getElementById("back-to-list").addEventListener("click", loadSavedEntries);
+document.getElementById("save-profile").addEventListener("click", () => {
+  const profileName = document.getElementById("profile-name").value;
+
+  chrome.storage.local.get("profiles", (result) => {
+    const profiles = result.profiles || {};
+    profiles[profileName] = {}; // Empty profile
+    chrome.storage.local.set({ profiles }, () => {
+      loadProfiles();
+      document.getElementById("profile-editor").style.display = "none";
+    });
+  });
+});
+
+function loadProfiles() {
+  chrome.storage.local.get("profiles", (result) => {
+    const profiles = result.profiles || {};
+    const profileList = document.getElementById("profile-list");
+    profileList.innerHTML = "";
+    Object.keys(profiles).forEach((profileName) => {
+      const li = document.createElement("li");
+      li.textContent = profileName;
+      profileList.appendChild(li);
+    });
+  });
 }
+
+// Data Transfer: Export and Email
+document.getElementById("export-data").addEventListener("click", () => {
+  chrome.storage.local.get(null, (data) => {
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "form_filler_data.json";
+    a.click();
+  });
+});
+
+document.getElementById("send-email").addEventListener("click", () => {
+  alert("Email functionality will be added soon.");
+});

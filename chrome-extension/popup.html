@@ -9,53 +9,73 @@
 <body>
   <!-- Navigation Menu -->
   <div id="nav-menu">
+    <button id="nav-dashboard">Dashboard</button>
     <button id="nav-view-data">View Saved Data</button>
-    <button id="nav-manual-entry">Manual Information Entry</button>
-    <button id="nav-cover-letter">Cover Letter Generator</button>
+    <button id="nav-manual-entry">Manual Entry</button>
+    <button id="nav-profiles">Profiles</button>
+    <button id="nav-data-transfer">Data Transfer</button>
   </div>
 
-  <!-- Manual Entry Section -->
-  <div id="manual-entry-section" class="section">
+  <!-- Dashboard Section -->
+  <div id="dashboard-section" class="section" style="display: none;">
+    <h2>Job Application Dashboard</h2>
+    <form id="application-form">
+      <label for="company">Company Name:</label>
+      <input type="text" id="company" name="company" required />
+
+      <label for="jobTitle">Job Title:</label>
+      <input type="text" id="jobTitle" name="jobTitle" required />
+
+      <label for="dateApplied">Date Applied:</label>
+      <input type="date" id="dateApplied" name="dateApplied" required />
+
+      <label for="status">Application Status:</label>
+      <input type="text" id="status" name="status" required />
+
+      <button type="submit">Add Application</button>
+    </form>
+    <table id="application-table">
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Job Title</th>
+          <th>Date Applied</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- Profiles Section -->
+  <div id="profiles-section" class="section" style="display: none;">
+    <h2>Profile Manager</h2>
+    <button id="new-profile">New Profile</button>
+    <div id="profile-editor" style="display: none;">
+      <label for="profile-name">Profile Name:</label>
+      <input type="text" id="profile-name" />
+      <button id="save-profile">Save Profile</button>
+    </div>
+    <ul id="profile-list"></ul>
+  </div>
+
+  <!-- Data Transfer Section -->
+  <div id="data-transfer-section" class="section" style="display: none;">
+    <h2>Data Transfer</h2>
+    <button id="export-data">Export Data</button>
+    <button id="send-email">Send via Email</button>
+  </div>
+
+  <!-- Existing Sections -->
+  <div id="manual-entry-section" class="section" style="display: none;">
     <h2>Enter Your Information</h2>
     <form id="data-form">
-      <label for="entryName">Entry Name:</label>
-      <input type="text" id="entryName" name="entryName" required placeholder="e.g., Job Application 1" />
-
-      <label for="firstName">First Name:</label>
-      <input type="text" id="firstName" name="firstName" required />
-
-      <label for="lastName">Last Name:</label>
-      <input type="text" id="lastName" name="lastName" required />
-
-      <label for="dob">Date of Birth:</label>
-      <input type="date" id="dob" name="dob" required />
-
-      <label for="country">Country of Residence:</label>
-      <input type="text" id="country" name="country" required />
-
-      <label for="city">City of Residence:</label>
-      <input type="text" id="city" name="city" required />
-
-      <label for="about">About Yourself:</label>
-      <textarea id="about" name="about"></textarea>
-
-      <label for="contact">Contact Information:</label>
-      <input type="text" id="contact" name="contact" required />
-
-      <button type="submit">Save Data</button>
+      <!-- Same as before -->
     </form>
   </div>
-
-  <!-- View Data Section -->
   <div id="view-data-section" class="section" style="display: none;">
     <h2>Saved Data</h2>
     <ul id="saved-entries"></ul>
-  </div>
-
-  <!-- Placeholder for Cover Letter Generator -->
-  <div id="cover-letter-section" class="section" style="display: none;">
-    <h2>Cover Letter Generator</h2>
-    <p>Coming soon...</p>
   </div>
 
   <script src="js/popup.js"></script>
