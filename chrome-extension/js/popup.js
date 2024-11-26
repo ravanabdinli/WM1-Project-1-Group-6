@@ -1,14 +1,29 @@
-const dataForm = document.getElementById("data-form");
-const viewDataButton = document.getElementById("view-data");
-const backToFormButton = document.getElementById("back-to-form");
-const mainSection = document.getElementById("main-section");
-const savedDataSection = document.getElementById("saved-data-section");
-const savedDataDiv = document.getElementById("saved-data");
+const sections = {
+  manualEntry: document.getElementById("manual-entry-section"),
+  viewData: document.getElementById("view-data-section"),
+  coverLetter: document.getElementById("cover-letter-section"),
+};
+
+// Navigation Buttons
+document.getElementById("nav-view-data").addEventListener("click", () => showSection("viewData"));
+document.getElementById("nav-manual-entry").addEventListener("click", () => showSection("manualEntry"));
+document.getElementById("nav-cover-letter").addEventListener("click", () => showSection("coverLetter"));
+
+// Show a specific section and hide others
+function showSection(section) {
+  Object.values(sections).forEach((s) => (s.style.display = "none"));
+  sections[section].style.display = "block";
+
+  if (section === "viewData") {
+    loadSavedEntries();
+  }
+}
 
 // Save data to chrome.storage.local
-dataForm.addEventListener("submit", (e) => {
+document.getElementById("data-form").addEventListener("submit", (e) => {
   e.preventDefault();
 
+  const entryName = document.getElementById("entryName").value;
   const data = {
     firstName: document.getElementById("firstName").value,
     lastName: document.getElementById("lastName").value,
@@ -19,43 +34,51 @@ dataForm.addEventListener("submit", (e) => {
     contact: document.getElementById("contact").value,
   };
 
-  chrome.storage.local.set({ userData: data }, () => {
-    alert("Data saved successfully!");
-    dataForm.reset();
-  });
-});
+  chrome.storage.local.get("userEntries", (result) => {
+    const userEntries = result.userEntries || {};
+    userEntries[entryName] = data;
 
-// Switch to the saved data view
-viewDataButton.addEventListener("click", () => {
-  chrome.storage.local.get("userData", (result) => {
-    const data = result.userData;
-    if (data) {
-      savedDataDiv.innerHTML = `
-        <p><strong>First Name:</strong> ${data.firstName}</p>
-        <p><strong>Last Name:</strong> ${data.lastName}</p>
-        <p><strong>Date of Birth:</strong> ${data.dob}</p>
-        <p><strong>Country:</strong> ${data.country}</p>
-        <p><strong>City:</strong> ${data.city}</p>
-        <p><strong>About:</strong> ${data.about}</p>
-        <p><strong>Contact:</strong> ${data.contact}</p>
-        <button id="edit-data">Edit Data</button>
-      `;
-    } else {
-      savedDataDiv.innerHTML = "<p>No data saved yet.</p>";
-    }
-    mainSection.style.display = "none";
-    savedDataSection.style.display = "block";
-
-    // Handle edit data button
-    document.getElementById("edit-data")?.addEventListener("click", () => {
-      mainSection.style.display = "block";
-      savedDataSection.style.display = "none";
+    chrome.storage.local.set({ userEntries }, () => {
+      alert("Data saved successfully!");
+      document.getElementById("data-form").reset();
     });
   });
 });
 
-// Switch back to the data form
-backToFormButton.addEventListener("click", () => {
-  mainSection.style.display = "block";
-  savedDataSection.style.display = "none";
-});
+// Load saved entries and display them in a list
+function loadSavedEntries() {
+  chrome.storage.local.get("userEntries", (result) => {
+    const userEntries = result.userEntries || {};
+    const savedEntriesList = document.getElementById("saved-entries");
+    savedEntriesList.innerHTML = "";
+
+    Object.keys(userEntries).forEach((entryName) => {
+      const li = document.createElement("li");
+      li.textContent = entryName;
+      li.addEventListener("click", () => displayEntryData(entryName, userEntries[entryName]));
+      savedEntriesList.appendChild(li);
+    });
+
+    if (Object.keys(userEntries).length === 0) {
+      savedEntriesList.innerHTML = "<p>No saved entries found.</p>";
+    }
+  });
+}
+
+// Display the details of a specific entry
+function displayEntryData(entryName, entryData) {
+  const savedEntriesList = document.getElementById("saved-entries");
+  savedEntriesList.innerHTML = `
+    <h3>${entryName}</h3>
+    <p><strong>First Name:</strong> ${entryData.firstName}</p>
+    <p><strong>Last Name:</strong> ${entryData.lastName}</p>
+    <p><strong>Date of Birth:</strong> ${entryData.dob}</p>
+    <p><strong>Country:</strong> ${entryData.country}</p>
+    <p><strong>City:</strong> ${entryData.city}</p>
+    <p><strong>About:</strong> ${entryData.about}</p>
+    <p><strong>Contact:</strong> ${entryData.contact}</p>
+    <button id="back-to-list">Back to List</button>
+  `;
+
+  document.getElementById("back-to-list").addEventListener("click", loadSavedEntries);
+}

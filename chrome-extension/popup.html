@@ -7,9 +7,20 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <div id="main-section">
+  <!-- Navigation Menu -->
+  <div id="nav-menu">
+    <button id="nav-view-data">View Saved Data</button>
+    <button id="nav-manual-entry">Manual Information Entry</button>
+    <button id="nav-cover-letter">Cover Letter Generator</button>
+  </div>
+
+  <!-- Manual Entry Section -->
+  <div id="manual-entry-section" class="section">
     <h2>Enter Your Information</h2>
     <form id="data-form">
+      <label for="entryName">Entry Name:</label>
+      <input type="text" id="entryName" name="entryName" required placeholder="e.g., Job Application 1" />
+
       <label for="firstName">First Name:</label>
       <input type="text" id="firstName" name="firstName" required />
 
@@ -33,13 +44,18 @@
 
       <button type="submit">Save Data</button>
     </form>
-    <button id="view-data">View Saved Data</button>
   </div>
 
-  <div id="saved-data-section" style="display: none;">
+  <!-- View Data Section -->
+  <div id="view-data-section" class="section" style="display: none;">
     <h2>Saved Data</h2>
-    <div id="saved-data"></div>
-    <button id="back-to-form">Back to Form</button>
+    <ul id="saved-entries"></ul>
+  </div>
+
+  <!-- Placeholder for Cover Letter Generator -->
+  <div id="cover-letter-section" class="section" style="display: none;">
+    <h2>Cover Letter Generator</h2>
+    <p>Coming soon...</p>
   </div>
 
   <script src="js/popup.js"></script>
