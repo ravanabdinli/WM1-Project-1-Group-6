@@ -1,18 +1,20 @@
 {
   "manifest_version": 3,
-  "name": "Smart Form Filler",
-  "description": "A Chrome extension to autofill forms with saved data.",
-  "version": "1.0",
-  "permissions": ["storage", "activeTab", "scripting"],
-  "host_permissions": ["<all_urls>"],
+  "name": "Smart Form Filler Extension",
+  "description": "Enhance your job applications with profiles, auto-fill, and tracking.",
+  "version": "2.0",
   "action": {
-    "default_popup": "popup.html",
-    "default_icon": "/icons/office-bag.png"
+    "default_popup": "/html/index.html",
+    "default_icon": "/icons/icon.png"
   },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["js/content.js"]
-    }
-  ]
+  "background": {
+    "service_worker": "/js/background.js"
+  },
+  "permissions": ["storage", "scripting", "activeTab", "downloads", "tabs"],
+  "host_permissions": ["<all_urls>"],
+  "icons": {
+    "16": "/icons/icon.png",
+    "48": "/icons/icon.png",
+    "128": "/icons/icon.png"
+  }
 }
