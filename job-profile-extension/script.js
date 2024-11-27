@@ -19,8 +19,24 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('importFile').addEventListener('change', importData);
     document.getElementById('emailDataButton').addEventListener('click', emailData);
 
+    // Add new buttons for saving and loading forms on any website
+    document.getElementById('saveCurrentFormButton').addEventListener('click', function() {
+        chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+            chrome.scripting.executeScript({
+                target: { tabId: tabs[0].id },
+                function: () => chrome.runtime.sendMessage({ action: "saveForm" })
+            });
+        });
+    });
 
-    
+    document.getElementById('loadSavedFormButton').addEventListener('click', function() {
+        chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+            chrome.scripting.executeScript({
+                target: { tabId: tabs[0].id },
+                function: () => chrome.runtime.sendMessage({ action: "loadForm" })
+            });
+        });
+    });
 });
 
 function loadProfileList() {
@@ -205,39 +221,15 @@ function importData(event) {
     reader.readAsText(file);
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    loadProfileList();
-
-    document.getElementById('profileSelect').addEventListener('change', loadSelectedProfile);
-    document.getElementById('saveButton').addEventListener('click', saveProfile);
-    document.getElementById('newProfileButton').addEventListener('click', createNewProfile);
-    document.getElementById('deleteProfileButton').addEventListener('click', deleteProfile);
-    document.getElementById('viewDashboardButton').addEventListener('click', function() {
-        window.location.href = 'dashboard.html';
-    });
-
-    document.getElementById('saveHistoryButton').addEventListener('click', saveHistory);
-    document.getElementById('loadHistoryButton').addEventListener('click', loadHistory);
-
-    document.getElementById('exportDataButton').addEventListener('click', exportData);
-    document.getElementById('importDataButton').addEventListener('click', function() {
-        document.getElementById('importFile').click();
-    });
-    document.getElementById('importFile').addEventListener('change', importData);
-    document.getElementById('emailDataButton').addEventListener('click', emailData);
-});
-
 function emailData() {
     console.log("Preparing email draft...");
 
-    // Get all data from Chrome storage
     chrome.storage.local.get(null, function(data) {
         if (chrome.runtime.lastError) {
             alert(`Error fetching data for email: ${chrome.runtime.lastError.message}`);
             return;
         }
 
-        // Prepare email body from the data
         let emailBody = 'Here is the exported profile data:\n\n';
         for (let key in data) {
             emailBody += `Profile: ${key}\n`;
@@ -249,11 +241,7 @@ function emailData() {
             emailBody += '\n';
         }
 
-        // Encode the email body
         const mailtoLink = `mailto:?subject=Exported Profile Data&body=${encodeURIComponent(emailBody)}`;
-        
-        // Redirect to mail client (Outlook or default mail client)
         window.location.href = mailtoLink;
     });
 }
-
