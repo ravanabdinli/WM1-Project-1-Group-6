@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dashboard.css">
+    <title>Job Application Dashboard</title>
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1>Job Application Tracking Dashboard</h1>
+        <table id="applicationTable">
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Job Title</th>
+                    <th>Date Applied</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <form id="jobForm">
+            <label>Company: <input type="text" id="company"></label>
+            <label>Job Title: <input type="text" id="jobTitle"></label>
+            <label>Date Applied: <input type="date" id="dateApplied"></label>
+            <label>Status:
+                <select id="status">
+                    <option value="Applied">Applied</option>
+                    <option value="Interviewing">Interviewing</option>
+                    <option value="Offer Received">Offer Received</option>
+                    <option value="Rejected">Rejected</option>
+                    <option value="On Hold">On Hold</option>
+                </select>
+            </label>
+            <button type="button" id="addJobButton">Add Job Application</button>
+        </form>
+        <button id="backButton">Back to Profile</button>
+    </div>
+    <script src="dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <title>Job Profile and Application Tracker</title>
+    <style>
+        body,html{
+          width: 500px;
+          height: 1500px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Customizable Profile</h1>
+        
+        <div id="profileSelection">
+            <label for="profileSelect">Select Profile: </label>
+            <select id="profileSelect">
+                <option value="">--Select Profile--</option>
+            </select>
+            <button type="button" id="newProfileButton">New Profile</button>
+            <button type="button" id="deleteProfileButton">Delete Profile</button>
+        </div>
+
+        <form id="profileForm">
+            <label>First Name: <input type="text" id="firstName"></label>
+            <label>Last Name: <input type="text" id="lastName"></label>
+            <label>Date of Birth: <input type="date" id="dob"></label>
+            <label>Email: <input type="email" id="email"></label>
+            <label>Phone: <input type="tel" id="phone"></label>
+            <label>Experience: <textarea id="experience"></textarea></label>
+            <label>Skills: <textarea id="skills"></textarea></label>
+            <label>Address: <input type="text" id="address"></label>
+            <label>Country of Residence: <input type="text" id="country"></label>
+            <label>City of Residence: <input type="text" id="city"></label>
+            <label>About Me: <textarea id="aboutMe"></textarea></label>
+            <label>Education: <textarea id="education"></textarea></label>
+            <label>Portfolio: <textarea id="portfolio"></textarea></label>
+            <button type="button" id="saveButton">Save</button>
+            <button type="button" id="saveHistoryButton">Save for Later</button>
+            <button type="button" id="loadHistoryButton">Load Saved Form</button>
+        </form>
+
+        <button id="viewDashboardButton">View Job Application Dashboard</button>
+        <button id="exportDataButton">Export Data</button>
+        <button id="importDataButton">Import Data</button>
+        <input type="file" id="importFile" style="display: none;">
+        <button id="emailDataButton">Send Data via Email</button>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>
