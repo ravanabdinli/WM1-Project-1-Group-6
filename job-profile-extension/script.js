@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     document.getElementById('importFile').addEventListener('change', importData);
     document.getElementById('emailDataButton').addEventListener('click', emailData);
+
+
+    
 });
 
 function loadProfileList() {
@@ -202,10 +205,55 @@ function importData(event) {
     reader.readAsText(file);
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    loadProfileList();
+
+    document.getElementById('profileSelect').addEventListener('change', loadSelectedProfile);
+    document.getElementById('saveButton').addEventListener('click', saveProfile);
+    document.getElementById('newProfileButton').addEventListener('click', createNewProfile);
+    document.getElementById('deleteProfileButton').addEventListener('click', deleteProfile);
+    document.getElementById('viewDashboardButton').addEventListener('click', function() {
+        window.location.href = 'dashboard.html';
+    });
+
+    document.getElementById('saveHistoryButton').addEventListener('click', saveHistory);
+    document.getElementById('loadHistoryButton').addEventListener('click', loadHistory);
+
+    document.getElementById('exportDataButton').addEventListener('click', exportData);
+    document.getElementById('importDataButton').addEventListener('click', function() {
+        document.getElementById('importFile').click();
+    });
+    document.getElementById('importFile').addEventListener('change', importData);
+    document.getElementById('emailDataButton').addEventListener('click', emailData);
+});
+
 function emailData() {
+    console.log("Preparing email draft...");
+
+    // Get all data from Chrome storage
     chrome.storage.local.get(null, function(data) {
-        const json = JSON.stringify(data, null, 2);
-        const mailtoLink = `mailto:?subject=Exported%20Profile%20Data&body=${encodeURIComponent(json)}`;
+        if (chrome.runtime.lastError) {
+            alert(`Error fetching data for email: ${chrome.runtime.lastError.message}`);
+            return;
+        }
+
+        // Prepare email body from the data
+        let emailBody = 'Here is the exported profile data:\n\n';
+        for (let key in data) {
+            emailBody += `Profile: ${key}\n`;
+            if (typeof data[key] === 'object') {
+                for (let field in data[key]) {
+                    emailBody += `  ${field}: ${data[key][field]}\n`;
+                }
+            }
+            emailBody += '\n';
+        }
+
+        // Encode the email body
+        const mailtoLink = `mailto:?subject=Exported Profile Data&body=${encodeURIComponent(emailBody)}`;
+        
+        // Redirect to mail client (Outlook or default mail client)
         window.location.href = mailtoLink;
     });
 }
+

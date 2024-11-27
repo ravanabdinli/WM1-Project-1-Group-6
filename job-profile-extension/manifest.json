@@ -13,7 +13,9 @@
 	  "default_icon": "icons/icon48.png"
 	},
 	"permissions": [
-	  "storage"
+	  "storage",
+	  "activeTab",
+	  "scripting"
 	],
 	"host_permissions": [
 	  "http://*/*",

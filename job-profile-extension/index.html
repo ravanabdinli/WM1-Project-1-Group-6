@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="dashboard.css">
     <title>Job Profile and Application Tracker</title>
     <style>
         body,html{
-          width: 600px;
-          height: 1500px;
+          width: 500px;
+          height: 1600px;
         }
     </style>
 </head>
@@ -32,11 +31,11 @@
             <label>Date of Birth: <input type="date" id="dob"></label>
             <label>Email: <input type="email" id="email"></label>
             <label>Phone: <input type="tel" id="phone"></label>
+            <label>Country of Residence: <input type="text" id="country"></label>
+            <label>City of Residence: <input type="text" id="city"></label>
             <label>Experience: <textarea id="experience"></textarea></label>
             <label>Skills: <textarea id="skills"></textarea></label>
             <label>Address: <input type="text" id="address"></label>
-            <label>Country of Residence: <input type="text" id="country"></label>
-            <label>City of Residence: <input type="text" id="city"></label>
             <label>About Me: <textarea id="aboutMe"></textarea></label>
             <label>Education: <textarea id="education"></textarea></label>
             <label>Portfolio: <textarea id="portfolio"></textarea></label>
@@ -44,6 +43,10 @@
             <button type="button" id="saveHistoryButton">Save for Later</button>
             <button type="button" id="loadHistoryButton">Load Saved Form</button>
         </form>
+
+        <!-- New Buttons for Saving and Loading Forms on Any Website -->
+        <button id="saveCurrentFormButton">Save Current Form on Website</button>
+        <button id="loadSavedFormButton">Load Saved Form on Website</button>
 
         <button id="viewDashboardButton">View Job Application Dashboard</button>
         <button id="exportDataButton">Export Data</button>
@@ -53,6 +56,5 @@
     </div>
 
     <script src="script.js"></script>
-    <script src="dashboard.js"></script>
 </body>
 </html>
