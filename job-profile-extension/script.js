@@ -1,11 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     loadProfileList();
-    loadSelectedProfile();
 
+    document.getElementById('profileSelect').addEventListener('change', loadSelectedProfile);
     document.getElementById('saveButton').addEventListener('click', saveProfile);
     document.getElementById('newProfileButton').addEventListener('click', createNewProfile);
     document.getElementById('deleteProfileButton').addEventListener('click', deleteProfile);
-    document.getElementById('profileSelect').addEventListener('change', loadSelectedProfile);
     document.getElementById('viewDashboardButton').addEventListener('click', function() {
         window.location.href = 'dashboard.html';
     });
@@ -43,6 +42,8 @@ function loadSelectedProfile() {
             const profileData = result[profileName];
             if (profileData) {
                 fillForm(profileData);
+            } else {
+                document.getElementById('profileForm').reset();
             }
         });
     } else {
@@ -51,6 +52,19 @@ function loadSelectedProfile() {
 }
 
 function saveProfile() {
+    // Required fields
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
+    const dob = document.getElementById('dob').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+
+    // Validation to check if required fields are filled
+    if (!firstName || !lastName || !dob || !email || !phone) {
+        alert('Please fill in all the required fields: First Name, Last Name, Date of Birth, Email, and Phone.');
+        return;
+    }
+
     const profileName = document.getElementById('profileSelect').value;
     if (!profileName) {
         alert('Please select or create a profile to save.');
@@ -77,7 +91,7 @@ function createNewProfile() {
             chrome.storage.local.set({ profileList }, function() {
                 loadProfileList();
                 document.getElementById('profileSelect').value = profileName;
-                document.getElementById('profileForm').reset();
+                loadSelectedProfile(); // Load the newly created profile immediately
                 alert('New profile created!');
             });
         } else {
