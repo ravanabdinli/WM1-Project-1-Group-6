@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
     loadProfileList();
-    
-    // Ensure event listeners are correctly attached when DOM is loaded
-    document.getElementById('profileSelect').addEventListener('change', loadSelectedProfile);
+    loadSelectedProfile();
+
     document.getElementById('saveButton').addEventListener('click', saveProfile);
     document.getElementById('newProfileButton').addEventListener('click', createNewProfile);
     document.getElementById('deleteProfileButton').addEventListener('click', deleteProfile);
+    document.getElementById('profileSelect').addEventListener('change', loadSelectedProfile);
     document.getElementById('viewDashboardButton').addEventListener('click', function() {
         window.location.href = 'dashboard.html';
     });
@@ -43,8 +43,6 @@ function loadSelectedProfile() {
             const profileData = result[profileName];
             if (profileData) {
                 fillForm(profileData);
-            } else {
-                document.getElementById('profileForm').reset(); // Reset form if no data is found
             }
         });
     } else {
@@ -53,19 +51,6 @@ function loadSelectedProfile() {
 }
 
 function saveProfile() {
-    // Required fields
-    const firstName = document.getElementById('firstName').value.trim();
-    const lastName = document.getElementById('lastName').value.trim();
-    const dob = document.getElementById('dob').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const phone = document.getElementById('phone').value.trim();
-
-    // Validation to check if required fields are filled
-    if (!firstName || !lastName || !dob || !email || !phone) {
-        alert('Please fill in all the required fields: First Name, Last Name, Date of Birth, Email, and Phone.');
-        return;
-    }
-
     const profileName = document.getElementById('profileSelect').value;
     if (!profileName) {
         alert('Please select or create a profile to save.');
@@ -75,11 +60,7 @@ function saveProfile() {
     const profileData = getFormData();
 
     chrome.storage.local.set({ [profileName]: profileData }, function() {
-        if (chrome.runtime.lastError) {
-            alert(`Error saving profile: ${chrome.runtime.lastError.message}`);
-        } else {
-            alert('Profile saved successfully!');
-        }
+        alert('Profile saved successfully!');
     });
 }
 
@@ -96,7 +77,7 @@ function createNewProfile() {
             chrome.storage.local.set({ profileList }, function() {
                 loadProfileList();
                 document.getElementById('profileSelect').value = profileName;
-                loadSelectedProfile(); // Load the newly created profile
+                document.getElementById('profileForm').reset();
                 alert('New profile created!');
             });
         } else {
@@ -128,11 +109,7 @@ function deleteProfile() {
 function saveHistory() {
     const formData = getFormData();
     chrome.storage.local.set({ savedForm: formData }, function() {
-        if (chrome.runtime.lastError) {
-            alert(`Error saving form: ${chrome.runtime.lastError.message}`);
-        } else {
-            alert('Form saved for later submission!');
-        }
+        alert('Form saved for later submission!');
     });
 }
 
@@ -147,12 +124,42 @@ function loadHistory() {
     });
 }
 
+function getFormData() {
+    return {
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
+        dob: document.getElementById('dob').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        experience: document.getElementById('experience').value,
+        skills: document.getElementById('skills').value,
+        address: document.getElementById('address').value,
+        country: document.getElementById('country').value,
+        city: document.getElementById('city').value,
+        aboutMe: document.getElementById('aboutMe').value,
+        education: document.getElementById('education').value,
+        portfolio: document.getElementById('portfolio').value
+    };
+}
+
+function fillForm(formData) {
+    document.getElementById('firstName').value = formData.firstName || '';
+    document.getElementById('lastName').value = formData.lastName || '';
+    document.getElementById('dob').value = formData.dob || '';
+    document.getElementById('email').value = formData.email || '';
+    document.getElementById('phone').value = formData.phone || '';
+    document.getElementById('experience').value = formData.experience || '';
+    document.getElementById('skills').value = formData.skills || '';
+    document.getElementById('address').value = formData.address || '';
+    document.getElementById('country').value = formData.country || '';
+    document.getElementById('city').value = formData.city || '';
+    document.getElementById('aboutMe').value = formData.aboutMe || '';
+    document.getElementById('education').value = formData.education || '';
+    document.getElementById('portfolio').value = formData.portfolio || '';
+}
+
 function exportData() {
     chrome.storage.local.get(null, function(data) {
-        if (chrome.runtime.lastError) {
-            alert(`Error exporting data: ${chrome.runtime.lastError.message}`);
-            return;
-        }
         const json = JSON.stringify(data, null, 2);
         const blob = new Blob([json], { type: "application/json" });
         const url = URL.createObjectURL(blob);
@@ -172,69 +179,19 @@ function importData(event) {
 
     const reader = new FileReader();
     reader.onload = function(event) {
-        try {
-            const data = JSON.parse(event.target.result);
-            chrome.storage.local.set(data, function() {
-                if (chrome.runtime.lastError) {
-                    alert(`Error importing data: ${chrome.runtime.lastError.message}`);
-                } else {
-                    loadProfileList();
-                    alert('Data imported successfully!');
-                }
-            });
-        } catch (e) {
-            alert('Error parsing JSON file. Please ensure it is a valid JSON.');
-        }
+        const data = JSON.parse(event.target.result);
+        chrome.storage.local.set(data, function() {
+            alert('Data imported successfully!');
+            loadProfileList();
+        });
     };
     reader.readAsText(file);
 }
 
 function emailData() {
     chrome.storage.local.get(null, function(data) {
-        if (chrome.runtime.lastError) {
-            alert(`Error fetching data for email: ${chrome.runtime.lastError.message}`);
-            return;
-        }
         const json = JSON.stringify(data, null, 2);
         const mailtoLink = `mailto:?subject=Exported%20Profile%20Data&body=${encodeURIComponent(json)}`;
         window.location.href = mailtoLink;
     });
-}
-
-function getFormData() {
-    return {
-        firstName: document.getElementById('firstName').value,
-        lastName: document.getElementById('lastName').value,
-        dob: document.getElementById('dob').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value,
-        country: document.getElementById('country').value,
-        city: document.getElementById('city').value,
-        contactInfo: document.getElementById('contactInfo').value,
-        address: document.getElementById('address').value,
-        experience: document.getElementById('experience').value,
-        skills: document.getElementById('skills').value,
-        aboutYourself: document.getElementById('aboutYourself').value,
-        aboutMe: document.getElementById('aboutMe').value,
-        education: document.getElementById('education').value,
-        portfolio: document.getElementById('portfolio').value
-    };
-}
-
-function fillForm(formData) {
-    document.getElementById('firstName').value = formData.firstName || '';
-    document.getElementById('lastName').value = formData.lastName || '';
-    document.getElementById('dob').value = formData.dob || '';
-    document.getElementById('email').value = formData.email || '';
-    document.getElementById('phone').value = formData.phone || '';
-    document.getElementById('country').value = formData.country || '';
-    document.getElementById('city').value = formData.city || '';
-    document.getElementById('contactInfo').value = formData.contactInfo || '';
-    document.getElementById('address').value = formData.address || '';
-    document.getElementById('experience').value = formData.experience || '';
-    document.getElementById('skills').value = formData.skills || '';
-    document.getElementById('aboutYourself').value = formData.aboutYourself || '';
-    document.getElementById('aboutMe').value = formData.aboutMe || '';
-    document.getElementById('education').value = formData.education || '';
-    document.getElementById('portfolio').value = formData.portfolio || '';
 }
