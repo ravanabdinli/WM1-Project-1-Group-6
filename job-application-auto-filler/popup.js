@@ -1,138 +1,117 @@
-const profileSelector = document.getElementById('profile-selector');
+const profileSelector = document.getElementById("profile-selector");
+const jobForm = document.getElementById("jobForm");
 
-// Load profiles on popup open
-chrome.storage.local.get('profiles', ({ profiles }) => {
-  if (!profiles) profiles = {};
-  Object.keys(profiles).forEach(profile => {
-    const option = document.createElement('option');
-    option.value = profile;
-    option.textContent = profile;
-    profileSelector.appendChild(option);
-  });
-});
+let profiles = {}; // Stores all profiles
+let currentProfile = null; // Active profile
 
-// Save data to a selected profile
-document.getElementById('save-button').addEventListener('click', () => {
-  const selectedProfile = profileSelector.value;
-  if (!selectedProfile) return alert('Please select or create a profile.');
-
-  const formData = {
-    firstName: document.getElementById('first-name').value,
-    lastName: document.getElementById('last-name').value,
-    email: document.getElementById('email').value,
-    phone: document.getElementById('phone').value,
-    skills: document.getElementById('skills').value,
-    address: document.getElementById('address').value,
-    dob: document.getElementById('dob').value,
-    country: document.getElementById('country').value,
-    city: document.getElementById('city').value,
-    about: document.getElementById('about').value,
-    education: document.getElementById('education').value,
-    portfolio: document.getElementById('portfolio').value
-  };
-
-  chrome.storage.local.get('profiles', ({ profiles }) => {
-    if (!profiles) profiles = {};
-    profiles[selectedProfile] = formData;
-
-    chrome.storage.local.set({ profiles }, () => {
-      alert(`Data saved for profile: ${selectedProfile}`);
+// Load profiles from Chrome storage on extension load
+function loadProfiles() {
+    chrome.storage.local.get("profiles", (result) => {
+        profiles = result.profiles || {};
+        populateProfileSelector();
+        if (Object.keys(profiles).length > 0) {
+            currentProfile = profileSelector.value || Object.keys(profiles)[0];
+            populateFields(currentProfile);
+        }
     });
-  });
-});
-
-// Fill form on the current page
-document.getElementById('fill-button').addEventListener('click', async () => {
-  const selectedProfile = profileSelector.value;
-  if (!selectedProfile) return alert('Please select a profile.');
-
-  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  chrome.scripting.executeScript({
-    target: { tabId: tab.id },
-    function: fillForm,
-    args: [selectedProfile]
-  });
-});
-
-function fillForm(profile) {
-  chrome.storage.local.get('profiles', ({ profiles }) => {
-    if (!profiles || !profiles[profile]) {
-      return alert('Profile data not found!');
-    }
-    const formData = profiles[profile];
-    const inputs = document.querySelectorAll('input, textarea');
-    inputs.forEach(input => {
-      const name = input.name || input.id;
-      if (formData[name]) input.value = formData[name];
-    });
-  });
 }
 
-// Add new profile
-document.getElementById('new-profile').addEventListener('click', () => {
-  const profileName = prompt('Enter profile name:');
-  if (!profileName) return;
-
-  chrome.storage.local.get('profiles', ({ profiles }) => {
-    if (!profiles) profiles = {};
-    if (profiles[profileName]) return alert('Profile already exists.');
-
-    profiles[profileName] = {}; // Empty profile
+// Save profiles to Chrome storage
+function saveProfiles() {
     chrome.storage.local.set({ profiles }, () => {
-      const option = document.createElement('option');
-      option.value = profileName;
-      option.textContent = profileName;
-      profileSelector.appendChild(option);
-      alert('Profile created successfully!');
+        console.log("Profiles saved.");
     });
-  });
-});
+}
 
-// Delete profile
-document.getElementById('delete-profile').addEventListener('click', () => {
-  const selectedProfile = profileSelector.value;
-  if (!selectedProfile) return alert('Please select a profile to delete.');
-
-  chrome.storage.local.get('profiles', ({ profiles }) => {
-    if (!profiles || !profiles[selectedProfile]) return alert('Profile not found.');
-
-    delete profiles[selectedProfile];
-    chrome.storage.local.set({ profiles }, () => {
-      const options = Array.from(profileSelector.options);
-      options.forEach(option => {
-        if (option.value === selectedProfile) option.remove();
-      });
-      alert(`Profile "${selectedProfile}" deleted successfully.`);
+// Populate profile selector dropdown
+function populateProfileSelector() {
+    profileSelector.innerHTML = "";
+    Object.keys(profiles).forEach((profileName) => {
+        const option = document.createElement("option");
+        option.value = profileName;
+        option.textContent = profileName;
+        profileSelector.appendChild(option);
     });
-  });
+
+    // Select the current profile
+    if (currentProfile) {
+        profileSelector.value = currentProfile;
+    }
+}
+
+// Populate form fields with data from the selected profile
+function populateFields(profileName) {
+    const profileData = profiles[profileName] || {};
+    document.getElementById("company").value = profileData.company || "";
+    document.getElementById("jobTitle").value = profileData.jobTitle || "";
+    document.getElementById("dateApplied").value = profileData.dateApplied || "";
+    document.getElementById("status").value = profileData.status || "";
+}
+
+// Handle form submission
+jobForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    if (!currentProfile) {
+        alert("Please select or create a profile.");
+        return;
+    }
+
+    const profileData = {
+        company: document.getElementById("company").value,
+        jobTitle: document.getElementById("jobTitle").value,
+        dateApplied: document.getElementById("dateApplied").value,
+        status: document.getElementById("status").value,
+    };
+
+    profiles[currentProfile] = profileData;
+    saveProfiles();
+    alert("Profile saved successfully!");
 });
 
-// Export data
-document.getElementById('export-button').addEventListener('click', () => {
-  chrome.storage.local.get('profiles', ({ profiles }) => {
-    const blob = new Blob([JSON.stringify(profiles, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'profiles.json';
-    a.click();
-    URL.revokeObjectURL(url);
-  });
+// Handle profile selection change
+profileSelector.addEventListener("change", () => {
+    currentProfile = profileSelector.value;
+    populateFields(currentProfile);
 });
 
-// Import data
-document.getElementById('import-button').addEventListener('click', () => {
-  const fileInput = document.getElementById('import-file');
-  const file = fileInput.files[0];
-  if (!file) return alert('Please select a file to import.');
+// Create a new profile
+document.getElementById("new-profile").addEventListener("click", () => {
+    const profileName = prompt("Enter profile name:");
+    if (!profileName) return;
 
-  const reader = new FileReader();
-  reader.onload = () => {
-    const importedData = JSON.parse(reader.result);
-    chrome.storage.local.set({ profiles: importedData }, () => {
-      alert('Profiles imported successfully!');
-      location.reload();
-    });
-  };
-  reader.readAsText(file);
+    if (profiles[profileName]) {
+        alert("Profile already exists.");
+        return;
+    }
+
+    profiles[profileName] = {}; // Create empty profile
+    currentProfile = profileName;
+    saveProfiles();
+    populateProfileSelector();
+    populateFields(currentProfile);
 });
+
+// Delete the current profile
+document.getElementById("delete-profile").addEventListener("click", () => {
+    if (!currentProfile) {
+        alert("No profile selected.");
+        return;
+    }
+
+    if (confirm(`Are you sure you want to delete the profile "${currentProfile}"?`)) {
+        delete profiles[currentProfile];
+        saveProfiles();
+        const profileNames = Object.keys(profiles);
+        currentProfile = profileNames.length > 0 ? profileNames[0] : null;
+        populateProfileSelector();
+        if (currentProfile) {
+            populateFields(currentProfile);
+        } else {
+            jobForm.reset();
+        }
+    }
+});
+
+// Initialize the extension
+loadProfiles();
