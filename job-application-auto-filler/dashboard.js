@@ -8,4 +8,4 @@ chrome.storage.sync.get('applications', function(data) {
         row.insertCell(2).innerText = application.dateApplied;
         row.insertCell(3).innerText = application.status;
     });
-});
+});         
