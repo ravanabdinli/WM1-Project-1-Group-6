@@ -71,6 +71,7 @@
             }
         });
     });
+   //( W3Schools.com. (n.d.). JavaScript HTML DOM EventListener. from https://www.w3schools.com/js/js_htmldom_eventlistener.asp)
 
 })();
 
