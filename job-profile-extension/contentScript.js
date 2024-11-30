@@ -53,6 +53,7 @@
         });
        
 //Santamaría, P. (2022, February 23). Chrome extensions: Local storage. DEV Community. https://dev.to/paulasantamaria/chrome-extensions-local-storage-1b34
+//chrome.storage. (n.d.). Chrome for Developers. https://developer.chrome.com/docs/extensions/reference/api/storage
         chrome.storage.local.set({ 'savedFormData': formData }, function () {
             alert('Form data saved successfully!');
 
