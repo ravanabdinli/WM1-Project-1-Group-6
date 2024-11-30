@@ -64,6 +64,7 @@ The **Profiles** section is your go-to area for saving and managing reusable inf
        - Captures details like your First Name, Last Name and About.
      - **How to Use**:
        - Open your [LinkedIn Profile](https://www.linkedin.com/in){:target="_blank"}.
+       - [Open your LinkedIn Profile to use this feature](https://www.linkedin.com/in){:target="_blank"}
        - Navigate to the Profiles section in the extension.
        - Click the **Fetch LinkedIn Data** (button appearing in bottom-right) to save the extracted data as a new profile or update an existing one.
    - **Import Profiles**:
