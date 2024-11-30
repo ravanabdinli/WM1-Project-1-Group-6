@@ -4,9 +4,7 @@
 	"version": "1.1",
 	"description": "Manage job profiles, track applications, and store data for future submissions, including saving and restoring form data.",
 	"icons": {
-	  "16": "icons/icon16.png",
-	  "48": "icons/icon48.png",
-	  "128": "icons/icon128.png"
+	  "48": "icons/icon48.png"
 	},
 	"action": {
 	  "default_popup": "home.html",
