@@ -3,11 +3,11 @@ body {
     background-color: #f2f2f2;
     color: #333;
     display: flex;
-    justify-content: flex-end; /* Align to the right side */
+    justify-content: flex-end; 
     align-items: center;
     height: 100vh;
     margin: 0;
-    padding-right: 20px; /* Add a bit of spacing from the edge, if needed */
+    padding-right: 20px;
 }
 
 .dashboard-container {
@@ -70,9 +70,8 @@ h1 {
 
 #addJobButton:hover,
 #backButton:hover {
-    background-image: linear-gradient(to right, white, rgb(255, 255, 255,0), white);
+    background-image: linear-gradient(to right, white, rgb(255, 255, 255,0), white);   /*W3Schools.com. (n.d.-d). https://www.w3schools.com/cssref/func_linear-gradient.php */
 }
-/* Style for the dropdown select elements */
 select {
     width: 100%;
     padding: 8px;
@@ -85,16 +84,14 @@ select {
     color: #333;
 }
 
-/* Style on hover and focus for better user interaction */
 select:hover, select:focus {
-    border-color: #007BFF; /* Change border color on hover and focus */
+    border-color: #007BFF;
     outline: none;
 }
 
-/* Style for individual options */
 select option {
     padding: 10px;
-    background-color: #fff; /* Set different background for options */
+    background-color: #fff; 
     color: #333;
 }
 
@@ -109,7 +106,7 @@ select option {
 }
 
 .deleteRowButton:hover {
-    background-image: linear-gradient(to right, white, rgba(255, 255, 255, 0), white);
-    color: red; /* Optional: Change text color for better contrast */
-    background-color: transparent; /* Ensure background-color doesn't override the gradient */
+    background-image: linear-gradient(to right, white, rgba(255, 255, 255, 0), white);   /*W3Schools.com. (n.d.-d). https://www.w3schools.com/cssref/func_linear-gradient.php */
+    color: red; 
+    background-color: transparent;
 }
