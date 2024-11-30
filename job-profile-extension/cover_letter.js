@@ -32,14 +32,14 @@ function loadSelectedProfile() {
 
 document.getElementById('generate').addEventListener('click', runAI);
 
-async function runAI() {
+async function runAI() { // This function generates a cover letter based on the selected profile’s information using Google’s Generative AI.
     if (!profileData) {
         console.error("No profile data loaded");
         return;
     }
 
     const genAI = new window.GoogleGenerativeAI(
-        "AIzaSyD3V-F_kvKhOkDdgHX7w5OCS-oiMQJhCJs"
+        "AIzaSyD3V-F_kvKhOkDdgHX7w5OCS-oiMQJhCJs" // OpenAI. (Nov 26, 2024). ChatGPT [Large language model]. https://chatgpt.com
     );
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" }); //The code initializes a connection to Google's Generative AI service using an API key and selects the "gemini-1.5-pro" model for generating AI outputs, such as text or other content.
 
@@ -52,22 +52,20 @@ They have received education in ${profileData.education}, and their portfolio ca
 
     console.log(prompt);
 
-    try {
+    try { //OpenAI. (Nov 27, 2024). ChatGPT [Large language model]. https://chatgpt.com
         const result = await model.generateContent(prompt);
 
         // Extract the text from the AI response
         const aiOutput = result.response.text();
 
         console.log("Generated Response:", aiOutput);
-
-        // Write the AI output to the textarea with id "cover_letter"
         const coverLetterTextarea = document.getElementById("cover_letter");
         if (coverLetterTextarea) {
-            coverLetterTextarea.value = aiOutput; // Write response to textarea
+            coverLetterTextarea.value = aiOutput; 
         } else {
             console.error("Textarea with id 'cover_letter' not found.");
         }
-        return; // Exit after a successful response
+        return; 
     } catch (error) {
         console.error("All retry attempts failed. Please try again later.");
     }
