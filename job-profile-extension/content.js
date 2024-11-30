@@ -47,6 +47,7 @@
         });
     }
 
+   //EventTarget: addEventListener() method - Web APIs | MDN. (2024, November 21). MDN Web Docs. https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
     // W3Schools. (n.d.). HTML DOM addEventListener() Method (from https://www.w3schools.com/js/js_htmldom_eventlistener.asp).
     saveButton.addEventListener('click', function () {
         const formData = getFormData();
@@ -55,7 +56,8 @@
         });
     });
 
-    // W3Schools. (n.d.). HTML DOM addEventListener() Method (from https://www.w3schools.com/js/js_htmldom_eventlistener.asp).
+   //EventTarget: addEventListener() method - Web APIs | MDN. (2024, November 21). MDN Web Docs. https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener 
+   //W3Schools. (n.d.). HTML DOM addEventListener() Method (from https://www.w3schools.com/js/js_htmldom_eventlistener.asp).
     loadButton.addEventListener('click', function () {
         chrome.storage.local.get(['savedWebFormData'], function (result) {
             if (result.savedWebFormData) {
