@@ -2,7 +2,7 @@
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* W3Schools.com. (n.d.-c). https://www.w3schools.com/jsref/prop_style_boxshadow.asp */
     width: 370px;
     margin: 10px 10px 10px 170px;
 }
@@ -45,6 +45,7 @@ button#generate {
     cursor: pointer;
 }
 button#generate:hover { 
-    background-image: linear-gradient(to right, white, rgb(255, 255, 255,0), white);;
+    /*W3Schools.com. (n.d.-d). https://www.w3schools.com/cssref/func_linear-gradient.php */
+    background-image: linear-gradient(to right, white, rgb(255, 255, 255,0), white);; 
 }
 
