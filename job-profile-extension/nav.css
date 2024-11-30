@@ -1,0 +1,70 @@
+/* Navigation Panel */
+#panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 100%;
+    background-color: #333;
+    padding-top: 20px;
+    z-index: 1000;
+}
+
+#panel ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#panel ul li {
+    margin: 20px 0;
+}
+
+#panel ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px;
+    display: block;
+}
+
+#panel ul li a:hover {
+    background-color: #575757;
+    border-radius: 5px;
+}
+
+/* General Content Styling */
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+.container {
+    margin-left: 220px; /* Create space for the navigation panel */
+    padding: 20px;
+    width: calc(100% - 220px);
+    box-sizing: border-box;
+    max-width: 800px;
+}
+
+h1 {
+    margin-top: 0;
+    color: #6a0dad;
+}
+
+body {
+    display: flex;
+    flex-direction: row;
+    height: auto;
+    overflow: hidden;
+}
+
+#panel {
+    flex: 0 0 200px;
+}
+
+.container {
+    flex: 1;
+    overflow-y: auto;
+}

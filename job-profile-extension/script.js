@@ -1,11 +1,11 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     loadProfileList();
 
     document.getElementById('profileSelect').addEventListener('change', loadSelectedProfile);
     document.getElementById('saveButton').addEventListener('click', saveProfile);
     document.getElementById('newProfileButton').addEventListener('click', createNewProfile);
     document.getElementById('deleteProfileButton').addEventListener('click', deleteProfile);
-    document.getElementById('viewDashboardButton').addEventListener('click', function() {
+    document.getElementById('viewDashboardButton').addEventListener('click', function () {
         window.location.href = 'dashboard.html';
     });
 
@@ -13,15 +13,15 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('loadHistoryButton').addEventListener('click', loadHistory);
 
     document.getElementById('exportDataButton').addEventListener('click', exportData);
-    document.getElementById('importDataButton').addEventListener('click', function() {
+    document.getElementById('importDataButton').addEventListener('click', function () {
         document.getElementById('importFile').click();
     });
     document.getElementById('importFile').addEventListener('change', importData);
     document.getElementById('emailDataButton').addEventListener('click', emailData);
 
     // Add new buttons for saving and loading forms on any website
-    document.getElementById('saveCurrentFormButton').addEventListener('click', function() {
-        chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+    document.getElementById('saveCurrentFormButton').addEventListener('click', function () {
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
                 function: () => chrome.runtime.sendMessage({ action: "saveForm" })
@@ -29,8 +29,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    document.getElementById('loadSavedFormButton').addEventListener('click', function() {
-        chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+    document.getElementById('loadSavedFormButton').addEventListener('click', function () {
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
                 function: () => chrome.runtime.sendMessage({ action: "loadForm" })
@@ -40,9 +40,9 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function loadProfileList() {
-    chrome.storage.local.get(['profileList'], function(result) {
+    chrome.storage.local.get(['profileList'], function (result) {
         const profileSelect = document.getElementById('profileSelect');
-        profileSelect.innerHTML = '<option value="">--Select Profile--</option>';
+        // profileSelect.innerHTML = '<option value="">--Select Profile--</option>';
         if (result.profileList) {
             result.profileList.forEach(profile => {
                 const option = document.createElement('option');
@@ -57,7 +57,7 @@ function loadProfileList() {
 function loadSelectedProfile() {
     const profileName = document.getElementById('profileSelect').value;
     if (profileName) {
-        chrome.storage.local.get([profileName], function(result) {
+        chrome.storage.local.get([profileName], function (result) {
             const profileData = result[profileName];
             if (profileData) {
                 fillForm(profileData);
@@ -92,7 +92,7 @@ function saveProfile() {
 
     const profileData = getFormData();
 
-    chrome.storage.local.set({ [profileName]: profileData }, function() {
+    chrome.storage.local.set({ [profileName]: profileData }, function () {
         alert('Profile saved successfully!');
     });
 }
@@ -103,11 +103,11 @@ function createNewProfile() {
         return;
     }
 
-    chrome.storage.local.get(['profileList'], function(result) {
+    chrome.storage.local.get(['profileList'], function (result) {
         let profileList = result.profileList || [];
         if (!profileList.includes(profileName)) {
             profileList.push(profileName);
-            chrome.storage.local.set({ profileList }, function() {
+            chrome.storage.local.set({ profileList }, function () {
                 loadProfileList();
                 document.getElementById('profileSelect').value = profileName;
                 loadSelectedProfile(); // Load the newly created profile immediately
@@ -126,11 +126,11 @@ function deleteProfile() {
         return;
     }
 
-    chrome.storage.local.get(['profileList'], function(result) {
+    chrome.storage.local.get(['profileList'], function (result) {
         let profileList = result.profileList || [];
         profileList = profileList.filter(profile => profile !== profileName);
-        chrome.storage.local.remove(profileName, function() {
-            chrome.storage.local.set({ profileList }, function() {
+        chrome.storage.local.remove(profileName, function () {
+            chrome.storage.local.set({ profileList }, function () {
                 loadProfileList();
                 document.getElementById('profileForm').reset();
                 alert('Profile deleted successfully!');
@@ -141,13 +141,13 @@ function deleteProfile() {
 
 function saveHistory() {
     const formData = getFormData();
-    chrome.storage.local.set({ savedForm: formData }, function() {
+    chrome.storage.local.set({ savedForm: formData }, function () {
         alert('Form saved for later submission!');
     });
 }
 
 function loadHistory() {
-    chrome.storage.local.get(['savedForm'], function(result) {
+    chrome.storage.local.get(['savedForm'], function (result) {
         if (result.savedForm) {
             fillForm(result.savedForm);
             alert('Form loaded successfully!');
@@ -192,7 +192,7 @@ function fillForm(formData) {
 }
 
 function exportData() {
-    chrome.storage.local.get(null, function(data) {
+    chrome.storage.local.get(null, function (data) {
         const json = JSON.stringify(data, null, 2);
         const blob = new Blob([json], { type: "application/json" });
         const url = URL.createObjectURL(blob);
@@ -211,9 +211,9 @@ function importData(event) {
     }
 
     const reader = new FileReader();
-    reader.onload = function(event) {
+    reader.onload = function (event) {
         const data = JSON.parse(event.target.result);
-        chrome.storage.local.set(data, function() {
+        chrome.storage.local.set(data, function () {
             alert('Data imported successfully!');
             loadProfileList();
         });
@@ -221,27 +221,87 @@ function importData(event) {
     reader.readAsText(file);
 }
 
-function emailData() {
-    console.log("Preparing email draft...");
 
-    chrome.storage.local.get(null, function(data) {
-        if (chrome.runtime.lastError) {
-            alert(`Error fetching data for email: ${chrome.runtime.lastError.message}`);
-            return;
-        }
 
-        let emailBody = 'Here is the exported profile data:\n\n';
-        for (let key in data) {
-            emailBody += `Profile: ${key}\n`;
-            if (typeof data[key] === 'object') {
-                for (let field in data[key]) {
-                    emailBody += `  ${field}: ${data[key][field]}\n`;
-                }
-            }
-            emailBody += '\n';
-        }
+// Listen for messages from content scripts
+chrome.storage.local.get(["userData"], function (result) {
+    if (result.userData) {
+        console.log("Retrieved user data:", result.userData);
+        document.getElementById('firstName').value = result.userData.firstname
+        document.getElementById('lastName').value = result.userData.lastname
+        document.getElementById('aboutMe').value = result.userData.about
+    } else {
+        console.log("No user data found.");
+    }
+});
 
-        const mailtoLink = `mailto:?subject=Exported Profile Data&body=${encodeURIComponent(emailBody)}`;
-        window.location.href = mailtoLink;
+// JavaScript code to fill in the form based on the profile data when clicking the 'Fill in the Form' button
+
+document.addEventListener("DOMContentLoaded", function() {
+    const fillButton = document.getElementById("fill");
+
+    fillButton.addEventListener("click", function() {
+        // Use Chrome's scripting API to inject code into the active tab
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            chrome.scripting.executeScript({
+                target: { tabId: tabs[0].id },
+                func: fillWebsiteForm,
+                args: [getProfileData()], // Pass the profile data to the function
+            });
+        });
     });
+});
+
+// Function to retrieve profile data from the form
+function getProfileData() {
+    return {
+        firstName: document.getElementById("firstName").value,
+        lastName: document.getElementById("lastName").value,
+        dob: document.getElementById("dob").value,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value,
+        country: document.getElementById("country").value,
+        city: document.getElementById("city").value,
+        experience: document.getElementById("experience").value,
+        skills: document.getElementById("skills").value,
+        address: document.getElementById("address").value,
+        aboutMe: document.getElementById("aboutMe").value,
+        education: document.getElementById("education").value,
+        portfolio: document.getElementById("portfolio").value
+    };
+}
+
+// Function to be executed on the active tab to fill in the form
+function fillWebsiteForm(profileData) {
+    // Map the profile fields to the website form fields (update selectors as needed)
+    const fieldMappings = {
+        firstName: ["first-name", "firstname", "first_name", "name", "givenname", "first"],
+        lastName: ["last-name", "lastname", "last_name", "surname", "familyname", "secondname"],
+        dob: ["date-of-birth", "dob", "dateofbirth", "birthdate", "birthday"],
+        email: ["email-address", "email", "email_address", "emailaddress"],
+        phone: ["phone-number", "phone", "phone_number", "phonenumber", "contact"],
+        country: ["country", "nation", "region", "location", "province"],
+        city: ["city", "town", "location"],
+        experience: ["experiences", "experience", "work_experience", "job_experience"],
+        skills: ["skills", "technical_skills", "soft_skills", "relevant_skills"],
+        address: ["street-address", "address", "street", "street_address", "streetaddress"],
+        aboutMe: ["aboutme", "about", "summary", "bio", "aboutMe"],
+        education: ["education", "educations", "studies", "academic_experience"],
+        portfolio: ["portfolio", "projects", "projects_work", "project_experience", "completed_projects"]
+    };
+
+    // Iterate through the field mappings and populate the form fields
+    for (const [profileKey, selectors] of Object.entries(fieldMappings)) {
+        for (const selector of selectors) {
+            const element = document.querySelector(`[name='${selector}']`);
+            if (element && profileData[profileKey]) {
+                element.value = profileData[profileKey];
+
+                element.dispatchEvent(new Event("input", { bubbles: true }));
+                element.dispatchEvent(new Event("change", { bubbles: true }));
+                break;
+            }
+        }
+    }
+    alert("Form filled with the selected profile data!");
 }

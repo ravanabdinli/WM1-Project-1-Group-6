@@ -4,22 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="nav.css">
     <title>Job Profile and Application Tracker</title>
     <style>
         body,html{
           width: 500px;
-          height: 1600px;
+          height: auto;
         }
     </style>
 </head>
 <body>
+
+    <!-- Navigation Panel -->
+    <div id="panel">
+        <ul>
+            <li><a id="homeLink" href="home.html">Home</a></li>
+            <li><a id="dashboardLink" href="dashboard.html">Dashboard</a></li>
+            <li><a id="profilesLink" href="index.html">Profiles</a></li>
+            <li><a id="coverLetterLink" href="cover_letter.html">Cover Letter Generator</a></li>
+        </ul>
+    </div>
+
     <div class="container">
         <h1>Customizable Profile</h1>
         
         <div id="profileSelection">
             <label for="profileSelect">Select Profile: </label>
             <select id="profileSelect">
-                <option value="">--Select Profile--</option>
+                <!-- <option value="">--Select Profile--</option> -->
             </select>
             <button type="button" id="newProfileButton">New Profile</button>
             <button type="button" id="deleteProfileButton">Delete Profile</button>
@@ -39,20 +51,15 @@
             <label>About Me: <textarea id="aboutMe"></textarea></label>
             <label>Education: <textarea id="education"></textarea></label>
             <label>Portfolio: <textarea id="portfolio"></textarea></label>
-            <button type="button" id="saveButton">Save</button>
-            <button type="button" id="saveHistoryButton">Save for Later</button>
-            <button type="button" id="loadHistoryButton">Load Saved Form</button>
         </form>
-
-        <!-- New Buttons for Saving and Loading Forms on Any Website -->
-        <button id="saveCurrentFormButton">Save Current Form on Website</button>
-        <button id="loadSavedFormButton">Load Saved Form on Website</button>
-
-        <button id="viewDashboardButton">View Job Application Dashboard</button>
+        
+        <button type="button" id="saveButton">Save</button>
+        <button type="button" id="fill">Fill in the Form</button>
+        <button type="button" id="saveHistoryButton">Save for Later</button>
+        <button type="button" id="loadHistoryButton">Load Saved Form</button>
         <button id="exportDataButton">Export Data</button>
         <button id="importDataButton">Import Data</button>
         <input type="file" id="importFile" style="display: none;">
-        <button id="emailDataButton">Send Data via Email</button>
     </div>
 
     <script src="script.js"></script>

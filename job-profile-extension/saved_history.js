@@ -1,8 +1,8 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     loadSavedForms();
 
-    document.getElementById('deleteAllButton').addEventListener('click', function() {
-        chrome.storage.local.remove('savedFormData', function() {
+    document.getElementById('deleteAllButton').addEventListener('click', function () {
+        chrome.storage.local.remove('savedFormData', function () {
             loadSavedForms();
             alert('All saved forms have been deleted.');
         });
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function loadSavedForms() {
-    chrome.storage.local.get(['savedFormData'], function(result) {
+    chrome.storage.local.get(['savedFormData'], function (result) {
         const savedFormsList = document.getElementById('savedFormsList');
         savedFormsList.innerHTML = '';
 

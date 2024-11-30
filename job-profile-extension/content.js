@@ -1,5 +1,8 @@
 // content.js
-(function() {
+
+(function () {
+    console.log('Content script')
+
     // Create and add "Save Form Data" and "Load Saved Data" buttons to the page
     const saveButton = document.createElement('button');
     saveButton.innerText = 'Save Form Data';
@@ -50,16 +53,16 @@
     }
 
     // Save form data when "Save Form Data" button is clicked
-    saveButton.addEventListener('click', function() {
+    saveButton.addEventListener('click', function () {
         const formData = getFormData();
-        chrome.storage.local.set({ 'savedWebFormData': formData }, function() {
+        chrome.storage.local.set({ 'savedWebFormData': formData }, function () {
             alert('Form data saved successfully!');
         });
     });
 
     // Load saved form data when "Load Saved Data" button is clicked
-    loadButton.addEventListener('click', function() {
-        chrome.storage.local.get(['savedWebFormData'], function(result) {
+    loadButton.addEventListener('click', function () {
+        chrome.storage.local.get(['savedWebFormData'], function (result) {
             if (result.savedWebFormData) {
                 fillFormData(result.savedWebFormData);
                 alert('Form data loaded successfully!');
@@ -68,4 +71,6 @@
             }
         });
     });
+
 })();
+
