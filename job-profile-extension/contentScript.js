@@ -40,6 +40,7 @@
     buttonContainer.appendChild(loadButton);
 
   // W3Schools. (n.d.). HTML DOM addEventListener() Method (from https://www.w3schools.com/js/js_htmldom_eventlistener.asp).
+  //EventTarget: addEventListener() method - Web APIs | MDN. (2024, November 21). MDN Web Docs. https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
     saveButton.addEventListener('click', saveCurrentForm);
     loadButton.addEventListener('click', loadSavedForm);
 
@@ -63,7 +64,7 @@
     function loadSavedForm() {
        
 // Santamaría, P. (2022, February 23). Chrome extensions: Local storage. DEV Community. https://dev.to/paulasantamaria/chrome-extensions-local-storage-1b34
-//EventTarget: addEventListener() method - Web APIs | MDN. (2024, November 21). MDN Web Docs. https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
+//chrome.storage. (n.d.). Chrome for Developers. https://developer.chrome.com/docs/extensions/reference/api/storage
         chrome.storage.local.get(['savedFormData'], function (result) {
             const savedFormData = result.savedFormData;
 
@@ -103,6 +104,7 @@
         buttonContainer.appendChild(grabData);
 
        // EventTarget: addEventListener() method - Web APIs | MDN. (2024, November 21). MDN Web Docs. https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
+        // W3Schools. (n.d.). HTML DOM addEventListener() Method (from https://www.w3schools.com/js/js_htmldom_eventlistener.asp).
         grabData.addEventListener('click', function () {
             const firstname = document.querySelector('.GOeJUcPFHkspaBiXAWYmOCUxFmlczdTkRE.inline.t-24.v-align-middle.break-words').textContent.trim().split(' ')[0]
             const lastname = document.querySelector('.GOeJUcPFHkspaBiXAWYmOCUxFmlczdTkRE.inline.t-24.v-align-middle.break-words').textContent.trim().split(' ')[1]
