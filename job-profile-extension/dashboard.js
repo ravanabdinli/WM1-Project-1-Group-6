@@ -1,4 +1,4 @@
-//EventTarget: addEventListener() method - Web APIs | MDN. (2024, November 21). MDN Web Docs. https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
+//EventTarget: addEventListener() method - Web APIs | MDN. MDN Web Docs. https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
 //W3Schools.com. (n.d.-a). https://www.w3schools.com/js/js_htmldom_eventlistener.asp
 document.addEventListener('DOMContentLoaded', function() 
   {
@@ -101,7 +101,7 @@ function styleDropdowns() {
         dropdown.style.cursor = "pointer";
         dropdown.style.color = "#333";
 
-        //EventTarget: addEventListener() method - Web APIs | MDN. (2024, November 21). MDN Web Docs. https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
+        //EventTarget: addEventListener() method - Web APIs | MDN. MDN Web Docs. https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
         //W3Schools.com. (n.d.-a). https://www.w3schools.com/js/js_htmldom_eventlistener.asp 
         dropdown.addEventListener('focus', function() {
             dropdown.style.borderColor = "#007BFF";
