@@ -223,24 +223,36 @@ function importData(event) {
 
 
 
-// Listen for messages from content scripts
-chrome.storage.local.get(["userData"], function (result) {
-    if (result.userData) {
-        console.log("Retrieved user data:", result.userData);
-        document.getElementById('firstName').value = result.userData.firstname
-        document.getElementById('lastName').value = result.userData.lastname
-        document.getElementById('aboutMe').value = result.userData.about
-    } else {
-        console.log("No user data found.");
-    }
-});
+// Check if the current page is index.html
+if (window.location.pathname.endsWith("index.html")) {
+    // Retrieve data from Chrome local storage
+    chrome.storage.local.get(["userData"], function (result) {
+        if (result.userData) {
+            if (confirm("Fetched data from LinkedIn has been found. Do you want to load the fetched data?")) {
+                console.log("Retrieved user data:", result.userData);
+
+                // Set form fields only if the data exists
+                document.getElementById('firstName').value = result.userData.firstname || '';
+                document.getElementById('lastName').value = result.userData.lastname || '';
+                document.getElementById('aboutMe').value = result.userData.about || '';
+            } else {
+                chrome.storage.local.remove("userData", function () {
+                    console.log("userData has been deleted from local storage.");
+                });
+            }
+        } else {
+            console.log("No user data found in local storage.");
+        }
+    });
+}
+
 
 // JavaScript code to fill in the form based on the profile data when clicking the 'Fill in the Form' button
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const fillButton = document.getElementById("fill");
 
-    fillButton.addEventListener("click", function() {
+    fillButton.addEventListener("click", function () {
         // Use Chrome's scripting API to inject code into the active tab
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             chrome.scripting.executeScript({
