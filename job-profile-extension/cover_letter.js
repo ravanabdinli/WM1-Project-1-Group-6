@@ -41,7 +41,7 @@ async function runAI() {
     const genAI = new window.GoogleGenerativeAI(
         "AIzaSyD3V-F_kvKhOkDdgHX7w5OCS-oiMQJhCJs"
     );
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" }); //The code initializes a connection to Google's Generative AI service using an API key and selects the "gemini-1.5-pro" model for generating AI outputs, such as text or other content.
 
     const prompt = `Write a professional cover letter for a job application. The name of the applicant is ${profileData.firstName} ${profileData.lastName}. 
 They have experience in ${profileData.experience}, and their skills include ${profileData.skills}. 
