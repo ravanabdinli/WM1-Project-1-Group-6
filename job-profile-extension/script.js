@@ -284,8 +284,10 @@ function getProfileData() {
 }
 
 // Function to be executed on the active tab to fill in the form
-function fillWebsiteForm(profileData) {
-    // Map the profile fields to the website form fields (update selectors as needed)
+function fillWebsiteForm(profileData)
+{
+    //The fillWebsiteForm function automates filling out online forms. It maps common profile fields to potential form field selectors, then locates and fills the corresponding fields on the website. This saves time, reduces errors, and streamlines repetitive tasks.
+    //OpenAI. (2024). ChatGPT [Large language model]. https://chatgpt.com
     const fieldMappings = {
         firstName: ["first-name", "firstname", "first_name", "name", "givenname", "first"],
         lastName: ["last-name", "lastname", "last_name", "surname", "familyname", "secondname"],
@@ -318,7 +320,8 @@ function fillWebsiteForm(profileData) {
     alert("Form filled with the selected profile data!");
 }
 
-// Function to export data
+//W3Schools.com. (n.d.-b). https://www.w3schools.com/jsref/event_bubbles.asp
+//EventTarget: addEventListener() method - Web APIs | MDN. (2024, November 21). MDN Web Docs. https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
 document.getElementById("exportDataButton").addEventListener("click", function () {
     const formFields = [
         "firstName",
@@ -386,7 +389,6 @@ document.getElementById("importDataButton").addEventListener("click", function (
     });
 });
 
-// Save for Later functionality
 document.getElementById("saveHistoryButton").addEventListener("click", function () {
     const formFields = [
         "firstName",
