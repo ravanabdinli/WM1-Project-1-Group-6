@@ -142,7 +142,6 @@ function loadApplications() {
                 tbody.appendChild(row);
             });
 
-            // Add event listeners to each status dropdown
             const dropdowns = document.querySelectorAll('.statusDropdown');
             dropdowns.forEach(dropdown => {
                 dropdown.addEventListener('change', updateStatus);
