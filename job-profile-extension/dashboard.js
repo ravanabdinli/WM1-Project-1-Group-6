@@ -1,4 +1,7 @@
-document.addEventListener('DOMContentLoaded', function() {
+//EventTarget: addEventListener() method - Web APIs | MDN. MDN Web Docs. https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
+//W3Schools.com. (n.d.-a). https://www.w3schools.com/js/js_htmldom_eventlistener.asp
+document.addEventListener('DOMContentLoaded', function() 
+  {
     loadApplications();
 
     document.getElementById('addJobButton').addEventListener('click', addApplication);
@@ -98,10 +101,12 @@ function styleDropdowns() {
         dropdown.style.cursor = "pointer";
         dropdown.style.color = "#333";
 
+        //EventTarget: addEventListener() method - Web APIs | MDN. MDN Web Docs. https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
+        //W3Schools.com. (n.d.-a). https://www.w3schools.com/js/js_htmldom_eventlistener.asp 
         dropdown.addEventListener('focus', function() {
             dropdown.style.borderColor = "#007BFF";
         });
-        dropdown.addEventListener('blur', function() {
+        dropdown.addEventListener('blur', function(){
             dropdown.style.borderColor = "#ccc";
         });
     });
@@ -137,7 +142,6 @@ function loadApplications() {
                 tbody.appendChild(row);
             });
 
-            // Add event listeners to each status dropdown
             const dropdowns = document.querySelectorAll('.statusDropdown');
             dropdowns.forEach(dropdown => {
                 dropdown.addEventListener('change', updateStatus);
@@ -155,6 +159,9 @@ function loadApplications() {
 function deleteApplication(event) {
     const index = event.target.getAttribute('data-index');
 
+//Santamaría, P. (2022, February 23). Chrome extensions: Local storage. DEV Community. https://dev.to/paulasantamaria/chrome-extensions-local-storage-1b34
+//chrome.storage. (n.d.). Chrome for Developers. https://developer.chrome.com/docs/extensions/reference/api/storage
+//ChatGPT - API citation Instructions. (n.d.). ChatGPT. https://chatgpt.com/share/674b62df-c6b4-8004-a67b-11103da1e3ac
     chrome.storage.local.get(['jobApplications'], function (result) {
         let jobApplications = result.jobApplications || [];
         if (jobApplications[index]) {

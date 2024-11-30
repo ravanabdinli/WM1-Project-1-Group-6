@@ -1,6 +1,6 @@
 
 {
-	"manifest_version": 3,
+	"manifest_version": 3, 
 	"name": "Job Profile and Application Tracker",
 	"version": "1.1",
 	"description": "Manage job profiles, track applications, and store data for future submissions, including saving and restoring form data.",

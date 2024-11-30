@@ -17,14 +17,14 @@ body {
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /*W3Schools.com. (n.d.-c). https://www.w3schools.com/jsref/prop_style_boxshadow.asp*/
     width: 90%;
     max-width: 330px;
     margin-left: 150px;
     margin-top: 0;
     font-size: 15px;
-    text-align: justify; /* Ensures text inside the container is justified */
-    line-height: 1.1; /* Adjust for consistent line spacing */
+    text-align: justify; 
+    line-height: 1.1; 
     /* letter-spacing: 0.3px; Adjust for consistent letter spacing */
 }
 

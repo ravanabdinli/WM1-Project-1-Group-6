@@ -3,18 +3,18 @@ body {
     background-color: #f2f2f2;
     color: #333;
     display: flex;
-    justify-content: flex-end; /* Align to the right side */
+    justify-content: flex-end; 
     align-items: center;
     height: 100vh;
     margin: 0;
-    padding-right: 20px; /* Add a bit of spacing from the edge, if needed */
+    padding-right: 20px;
 }
 
 .dashboard-container {
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* W3Schools.com. (n.d.-c). https://www.w3schools.com/jsref/prop_style_boxshadow.asp */
     width: 370px;
     margin: 10px 10px 10px 170px;
 }
@@ -45,7 +45,9 @@ h1 {
 
 #jobForm input[type="text"],
 #jobForm input[type="date"] {
-    width: calc(100% - 20px);
+    /* W3Schools.com. (n.d.-e). https://www.w3schools.com/cssref/css_functions.php */
+    /* W3Schools.com. (n.d.-f). https://www.w3schools.com/cssref/func_calc.php */
+    width: calc(100% - 20px); 
     padding: 8px;
     margin-top: 5px;
     margin-bottom: 15px;
@@ -70,9 +72,8 @@ h1 {
 
 #addJobButton:hover,
 #backButton:hover {
-    background-image: linear-gradient(to right, white, rgb(255, 255, 255,0), white);
+    background-image: linear-gradient(to right, white, rgb(255, 255, 255,0), white); /*W3Schools.com. (n.d.-d). https://www.w3schools.com/cssref/func_linear-gradient.php */
 }
-/* Style for the dropdown select elements */
 select {
     width: 100%;
     padding: 8px;
@@ -85,16 +86,14 @@ select {
     color: #333;
 }
 
-/* Style on hover and focus for better user interaction */
 select:hover, select:focus {
-    border-color: #007BFF; /* Change border color on hover and focus */
+    border-color: #007BFF;
     outline: none;
 }
 
-/* Style for individual options */
 select option {
     padding: 10px;
-    background-color: #fff; /* Set different background for options */
+    background-color: #fff; 
     color: #333;
 }
 
@@ -109,7 +108,7 @@ select option {
 }
 
 .deleteRowButton:hover {
-    background-image: linear-gradient(to right, white, rgba(255, 255, 255, 0), white);
-    color: red; /* Optional: Change text color for better contrast */
-    background-color: transparent; /* Ensure background-color doesn't override the gradient */
+    background-image: linear-gradient(to right, white, rgba(255, 255, 255, 0), white);   /*W3Schools.com. (n.d.-d). https://www.w3schools.com/cssref/func_linear-gradient.php */
+    color: red; 
+    background-color: transparent;
 }

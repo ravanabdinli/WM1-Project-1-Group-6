@@ -1,9 +1,6 @@
-// content.js
-
 (function () {
     console.log('Content script')
 
-    // Create and add "Save Form Data" and "Load Saved Data" buttons to the page
     const saveButton = document.createElement('button');
     saveButton.innerText = 'Save Form Data';
     saveButton.style.position = 'fixed';
@@ -30,7 +27,6 @@
     loadButton.style.cursor = 'pointer';
     document.body.appendChild(loadButton);
 
-    // Function to get form data from the current page
     function getFormData() {
         const formData = {};
         const inputs = document.querySelectorAll('input, select, textarea');
@@ -42,7 +38,6 @@
         return formData;
     }
 
-    // Function to fill the form with saved data
     function fillFormData(savedData) {
         const inputs = document.querySelectorAll('input, select, textarea');
         inputs.forEach(input => {
@@ -52,7 +47,8 @@
         });
     }
 
-    // Save form data when "Save Form Data" button is clicked
+   //EventTarget: addEventListener() method - Web APIs | MDN. MDN Web Docs. https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
+    // W3Schools. (n.d.). HTML DOM addEventListener() Method (from https://www.w3schools.com/js/js_htmldom_eventlistener.asp).
     saveButton.addEventListener('click', function () {
         const formData = getFormData();
         chrome.storage.local.set({ 'savedWebFormData': formData }, function () {
@@ -60,7 +56,8 @@
         });
     });
 
-    // Load saved form data when "Load Saved Data" button is clicked
+   //EventTarget: addEventListener() method - Web APIs | MDN. MDN Web Docs. https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener 
+   //W3Schools. (n.d.). HTML DOM addEventListener() Method (from https://www.w3schools.com/js/js_htmldom_eventlistener.asp).
     loadButton.addEventListener('click', function () {
         chrome.storage.local.get(['savedWebFormData'], function (result) {
             if (result.savedWebFormData) {
@@ -71,7 +68,5 @@
             }
         });
     });
-   //( W3Schools.com. (n.d.). JavaScript HTML DOM EventListener. from https://www.w3schools.com/js/js_htmldom_eventlistener.asp)
-
 })();
 
