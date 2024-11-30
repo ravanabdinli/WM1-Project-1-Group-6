@@ -1,4 +1,4 @@
-//EventTarget: addEventListener() method - Web APIs | MDN. (2024, November 21). MDN Web Docs. https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
+//EventTarget: addEventListener() method - Web APIs | MDN. MDN Web Docs. https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
 //W3Schools.com. (n.d.-b). https://www.w3schools.com/jsref/event_bubbles.asp
 document.addEventListener('DOMContentLoaded', function () {
     loadProfileList();
@@ -225,9 +225,7 @@ function importData(event) {
 
 
 
-// Check if the current page is index.html
 if (window.location.pathname.endsWith("index.html")) {
-    // Retrieve data from Chrome local storage
     chrome.storage.local.get(["userData"], function (result) {
         if (result.userData) {
             if (confirm("Fetched data from LinkedIn has been found. Do you want to load the fetched data?")) {
@@ -260,7 +258,7 @@ document.addEventListener("DOMContentLoaded", function () {
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
                 func: fillWebsiteForm,
-                args: [getProfileData()], // Pass the profile data to the function
+                args: [getProfileData()], 
             });
         });
     });
@@ -289,7 +287,7 @@ function getProfileData() {
 function fillWebsiteForm(profileData)
 {
     //The fillWebsiteForm function automates filling out online forms. It maps common profile fields to potential form field selectors, then locates and fills the corresponding fields on the website. This saves time, reduces errors, and streamlines repetitive tasks.
-    //OpenAI. (2024). ChatGPT [Large language model]. https://chatgpt.com
+    //OpenAI. (2024, November 30). ChatGPT [Large language model]. https://chatgpt.com
     const fieldMappings = {
         firstName: ["first-name", "firstname", "first_name", "name", "givenname", "first"],
         lastName: ["last-name", "lastname", "last_name", "surname", "familyname", "secondname"],
@@ -323,7 +321,7 @@ function fillWebsiteForm(profileData)
 }
 
 //W3Schools.com. (n.d.-b). https://www.w3schools.com/jsref/event_bubbles.asp
-//EventTarget: addEventListener() method - Web APIs | MDN. (2024, November 21). MDN Web Docs. https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
+//EventTarget: addEventListener() method - Web APIs | MDN. MDN Web Docs. https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
 document.getElementById("exportDataButton").addEventListener("click", function () {
     const formFields = [
         "firstName",
