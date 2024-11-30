@@ -63,10 +63,7 @@ The **Profiles** section is your go-to area for saving and managing reusable inf
        - Automatically pulls information from LinkedIn when you’re viewing a LinkedIn profile page.
        - Captures details like your First Name, Last Name and About.
      - **How to Use**:
-       - Open your [LinkedIn Profile](https://www.linkedin.com/in){:target="_blank"}.
-       - [Open your LinkedIn Profile to use this feature](https://www.linkedin.com/in){:target="_blank"}
-       - <a href="https://www.linkedin.com/in" target="_blank" rel="noopener noreferrer">Open your LinkedIn Profile to use this feature</a>
-
+       - Open your [LinkedIn Profile](https://www.linkedin.com/)
        - Navigate to the Profiles section in the extension.
        - Click the **Fetch LinkedIn Data** (button appearing in bottom-right) to save the extracted data as a new profile or update an existing one.
    - **Import Profiles**:
