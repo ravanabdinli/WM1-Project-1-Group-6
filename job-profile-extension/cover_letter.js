@@ -29,7 +29,7 @@ function loadSelectedProfile() {
         profileData = null;
     }
 }
-//EventTarget: addEventListener() method - Web APIs | MDN. (2024, November 21). MDN Web Docs. https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
+//EventTarget: addEventListener() method - Web APIs | MDN. MDN Web Docs. https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
 document.getElementById('generate').addEventListener('click', runAI);
 
 async function runAI() { // This function generates a cover letter based on the selected profile’s information using Google’s Generative AI.
