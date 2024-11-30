@@ -44,8 +44,7 @@ button#generate {
     font-size: 1em;
     cursor: pointer;
 }
-
-button#generate:hover {
+button#generate:hover { 
     background-image: linear-gradient(to right, white, rgb(255, 255, 255,0), white);;
 }
 
