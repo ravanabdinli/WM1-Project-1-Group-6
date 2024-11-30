@@ -1,3 +1,5 @@
+//EventTarget: addEventListener() method - Web APIs | MDN. (2024, November 21). MDN Web Docs. https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
+//W3Schools.com. (n.d.-b). https://www.w3schools.com/jsref/event_bubbles.asp
 document.addEventListener('DOMContentLoaded', function () {
     loadProfileList();
 
