@@ -14,13 +14,16 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    width: 90%;
-    max-width: 600px;
+    width: 370px;
+    margin: 10px 10px 10px 170px;
+    /* margin-top: 50px; */
 }
 
 h1 {
     text-align: center;
     margin-bottom: 20px;
+    color: #771677;
+    
 }
 
 #profileSelection {
@@ -47,15 +50,16 @@ h1 {
     padding: 5px 10px;
     margin-right: 5px;
     cursor: pointer;
-    background-color: #007BFF;
+    background-color: #771677;
     color: white;
     border: none;
     border-radius: 5px;
 }
 
+
 #newProfileButton:hover,
 #deleteProfileButton:hover {
-    background-color: #0056b3;
+    background-image: linear-gradient(to right, white, rgb(255, 255, 255,0), white);
 }
 
 form label {
@@ -85,7 +89,7 @@ button {
     display: block;
     width: 100%;
     padding: 10px;
-    background-color: #007BFF;
+    background-color: #000453;
     color: white;
     border: none;
     border-radius: 5px;
@@ -94,14 +98,13 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
-}
+    background-image:  linear-gradient(to right, white, rgb(255, 255, 255,0), white);}
 
 button {
     display: block;
     width: 100%;
     padding: 10px;
-    background-color: #007BFF;
+    background-color: #000453;
     color: white;
     border: none;
     border-radius: 5px;
@@ -111,5 +114,22 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-image:  linear-gradient(to right, white, rgb(255, 255, 255,0), white);}
+
+    #saveHistoryButton,
+#loadHistoryButton {
+    display: inline-block;
+    width: calc(50% - 10px);
+    margin-right: 10px;
+    padding: 10px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
 }
+
+#loadHistoryButton {
+    margin-right: 0;
+}
+

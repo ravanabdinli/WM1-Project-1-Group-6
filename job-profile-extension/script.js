@@ -305,3 +305,126 @@ function fillWebsiteForm(profileData) {
     }
     alert("Form filled with the selected profile data!");
 }
+
+// Function to export data
+document.getElementById("exportDataButton").addEventListener("click", function () {
+    const formFields = [
+        "firstName",
+        "lastName",
+        "dob",
+        "email",
+        "phone",
+        "country",
+        "city",
+        "experience",
+        "skills",
+        "address",
+        "aboutMe",
+        "education",
+        "portfolio"
+    ];
+
+    const data = {};
+    formFields.forEach((field) => {
+        const element = document.getElementById(field);
+        if (element) {
+            data[field] = element.value;
+        }
+    });
+
+    const dataStr = JSON.stringify(data, null, 2);
+    const blob = new Blob([dataStr], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "profile_data.json";
+    a.click();
+
+    URL.revokeObjectURL(url);
+});
+
+// Function to import data
+document.getElementById("importDataButton").addEventListener("click", function () {
+    const importFileInput = document.getElementById("importFile");
+    importFileInput.click();
+
+    importFileInput.addEventListener("change", function () {
+        const file = importFileInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    for (const key in data) {
+                        const element = document.getElementById(key);
+                        if (element) {
+                            element.value = data[key];
+                        }
+                    }
+                    alert("Data imported successfully!");
+                } catch (error) {
+                    alert("Invalid file format. Please upload a valid JSON file.");
+                }
+            };
+
+            reader.readAsText(file);
+        }
+    });
+});
+
+// Save for Later functionality
+document.getElementById("saveHistoryButton").addEventListener("click", function () {
+    const formFields = [
+        "firstName",
+        "lastName",
+        "dob",
+        "email",
+        "phone",
+        "country",
+        "city",
+        "experience",
+        "skills",
+        "address",
+        "aboutMe",
+        "education",
+        "portfolio"
+    ];
+
+    const data = {};
+    formFields.forEach((field) => {
+        const element = document.getElementById(field);
+        if (element) {
+            data[field] = element.value;
+        }
+    });
+
+    try {
+        localStorage.setItem("savedProfileData", JSON.stringify(data));
+        alert("Data saved for later successfully!");
+    } catch (error) {
+        alert("Failed to save data. Your browser may not support localStorage.");
+    }
+});
+
+// Load Saved Later functionality
+document.getElementById("loadHistoryButton").addEventListener("click", function () {
+    const savedData = localStorage.getItem("savedProfileData");
+    if (savedData) {
+        try {
+            const data = JSON.parse(savedData);
+            for (const key in data) {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.value = data[key];
+                }
+            }
+            alert("Saved data loaded successfully!");
+        } catch (error) {
+            alert("Failed to load data. The saved data might be corrupted.");
+        }
+    } else {
+        alert("No saved data found!");
+    }
+});
